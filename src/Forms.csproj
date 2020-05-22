@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.*" />
+    <PackageReference Include="Utilities" Version="1.0.0-*" />
+    <PackageReference Include="Optional" Version="4.*" />
+  </ItemGroup>
+
+</Project>
