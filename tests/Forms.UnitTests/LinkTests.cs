@@ -1,11 +1,34 @@
 ﻿using FluentAssertions;
 
 using Xunit;
+using Xunit.Categories;
 
 namespace Forms.UnitTests
 {
+    [Feature(nameof(Forms))]
+    [Feature(nameof(Link))]
     public class LinkTests
     {
+
+        [Fact]
+        public void Ctor_builds_valid_instance()
+        {
+            // Act
+            Link link = new Link();
+
+            // Assert
+            link.Href.Should()
+                     .BeNull();
+            link.Method.Should()
+                       .BeNull();
+            link.Relation.Should()
+                         .BeNull();
+            link.Template.Should()
+                         .BeNull();
+            link.Title.Should()
+                      .BeNull();
+        }
+
 
         [Theory]
         [InlineData("a/link/", false, "a relative link with no placeholder" )]

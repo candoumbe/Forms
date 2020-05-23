@@ -165,7 +165,7 @@ namespace Forms
             Form form = new Form
             {
                 Meta = _meta,
-                Items = _fields,
+                Fields = _fields,
             };
 
             return form;
