@@ -4,10 +4,12 @@ using Newtonsoft.Json.Converters;
 namespace Forms
 {
     /// <summary>
-    /// Form field representation
+    /// Form field representation.
+    /// <para>
+    ///     Inspired by ION spec (see http://ionwg.org/draft-ion.html#form-fields for more details)
+    /// </para>
     /// </summary>
     /// <remarks>
-    ///     Inspired by ION spec (see http://ionwg.org/draft-ion.html#form-fields for more details)
     /// </remarks>
     [JsonObject]
     public class FormField

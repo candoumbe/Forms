@@ -44,8 +44,9 @@ namespace Forms
         /// <code>api/patients/{id?}</code> is a template url as it contiains one placeholder
         /// 
         /// </remarks>
-        public bool? Template => Href.Like("*{?*}*");
+        public bool? Template => Href?.Like("*{?*}*");
 
+        /// <inheritdoc/>
         public override string ToString() => this.Jsonify();
     }
 }

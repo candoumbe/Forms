@@ -50,8 +50,8 @@ namespace Forms.Tests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.Nickname),
-                    (Expression<Func<Form, bool>>)(form => form.Items != null && form.Items.Count() == 1
-                        && form.Items.Once(field => field.Name == nameof(SuperHero.Nickname)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                        && form.Fields.Once(field => field.Name == nameof(SuperHero.Nickname)
                             && field.Type == FormFieldType.String
                             && field.Label == nameof(SuperHero.Nickname)
                         )
@@ -62,8 +62,8 @@ namespace Forms.Tests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.RealName),
-                    (Expression<Func<Form, bool>>)(form => form.Items != null && form.Items.Exactly(1)
-                        && form.Items.Once(field => field.Name == nameof(SuperHero.RealName)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Exactly(1)
+                        && form.Fields.Once(field => field.Name == nameof(SuperHero.RealName)
                             && field.Type == FormFieldType.String
                             && field.Label == nameof(SuperHero.RealName)
                             && field.Secret.HasValue && field.Secret.Value
@@ -75,8 +75,8 @@ namespace Forms.Tests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.RealName, new FormFieldAttributeOverrides { Secret = false }),
-                    (Expression<Func<Form, bool>>)(form => form.Items != null && form.Items.Count() == 1
-                        && form.Items.Once(field => field.Name == nameof(SuperHero.RealName)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                        && form.Fields.Once(field => field.Name == nameof(SuperHero.RealName)
                             && field.Type == FormFieldType.String
                             && field.Label == nameof(SuperHero.RealName)
                             && field.Secret.HasValue
@@ -88,8 +88,8 @@ namespace Forms.Tests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.RealName, new FormFieldAttributeOverrides { Description = "Secret identity of the hero" }),
-                    (Expression<Func<Form, bool>>)(form => form.Items != null && form.Items.Count() == 1
-                        && form.Items.Once(field => field.Name == nameof(SuperHero.RealName)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                        && form.Fields.Once(field => field.Name == nameof(SuperHero.RealName)
                             && field.Type == FormFieldType.String
                             && field.Label == nameof(SuperHero.RealName)
                             && field.Description == "Secret identity of the hero"
@@ -101,8 +101,8 @@ namespace Forms.Tests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.BirthDate),
-                    (Expression<Func<Form, bool>>)(form => form.Items != null && form.Items.Count() == 1
-                        && form.Items.Once(field => field.Name == nameof(SuperHero.BirthDate)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                        && form.Fields.Once(field => field.Name == nameof(SuperHero.BirthDate)
                             && field.Type == FormFieldType.DateTime
                             && field.Label == nameof(SuperHero.BirthDate)
                         )
@@ -112,8 +112,8 @@ namespace Forms.Tests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.CurrentWinningStreakCount),
-                    (Expression<Func<Form, bool>>)(form => form.Items != null && form.Items.Count() == 1
-                        && form.Items.Once(field => field.Name == nameof(SuperHero.CurrentWinningStreakCount)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                        && form.Fields.Once(field => field.Name == nameof(SuperHero.CurrentWinningStreakCount)
                             && field.Type == Integer
                             && field.Label == nameof(SuperHero.CurrentWinningStreakCount)
                         )
@@ -133,7 +133,7 @@ namespace Forms.Tests
             _outputHelper.WriteLine($"Form built : {SerializeObject(form)}");
 
             // Assert
-            form.Items.Should()
+            form.Fields.Should()
                 .NotBeNull().And
                 .NotContainNulls();
             form.Should()
