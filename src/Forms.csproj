@@ -1,12 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;netstandard2.0</TargetFrameworks>
     <LangVersion>preview</LangVersion>
+    <Description>Adds NETStandard 1.0 support</Description>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://dev.azure.com/candoumbe/Forms</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.*" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.*" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <PackageReference Include="Utilities" Version="1.0.0-*" />
     <PackageReference Include="Optional" Version="4.*" />
   </ItemGroup>

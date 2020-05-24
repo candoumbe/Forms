@@ -18,5 +18,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Forms.csproj" />
   </ItemGroup>
-
 </Project>

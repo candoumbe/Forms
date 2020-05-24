@@ -29,8 +29,7 @@ namespace Forms
             typeof(long), typeof(long?),
             typeof(double), typeof(double?),
             typeof(short), typeof(short?),
-            typeof(decimal), typeof(decimal?),
-
+            typeof(decimal), typeof(decimal?)
         };
 
         private readonly IList<FormField> _fields;
@@ -108,6 +107,11 @@ namespace Forms
                         {
                             field.Type = attr.Type;
                         }
+
+                        if (attr.IsEnabledSet)
+                        {
+                            field.Enabled = attr.Enabled;
+                        }
                     });
 
                 optionalAttributesOverride.MatchSome((attrs) =>
@@ -144,17 +148,14 @@ namespace Forms
                     }
                 });
 
-
                 field.Label = field.Name;
                 field.Enabled = attributes?.Enabled;
-
 
                 _fields.Add(field);
             }
 
             return this;
         }
-
 
         /// <summary>
         /// Builds a <see cref="Form"/> instance according to the current configuration.
