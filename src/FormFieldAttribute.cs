@@ -26,6 +26,7 @@ namespace Forms
                 IsTypeSet = true;
             }
         }
+
         /// <summary>
         /// Indicates if <see cref="Type"/> was set
         /// </summary>
@@ -40,11 +41,11 @@ namespace Forms
             set
             {
                 _enabled = value;
-                _isEnabledSet = true;
+                IsEnabledSet = true;
             }
         }
 
-        private bool _isEnabledSet;
+        internal bool IsEnabledSet { get; set; }
 
         /// <summary>
         /// Indicates if the field must be present when "submitting" the <see cref="Form"/>.
@@ -58,6 +59,7 @@ namespace Forms
                 IsRequiredSet = true;
             }
         }
+
         /// <summary>
         /// Indicates if the <see cref="Required"/> property was explicitly set
         /// </summary>
@@ -82,6 +84,7 @@ namespace Forms
                 IsDescriptionSet = true;
             }
         }
+
         internal bool IsDescriptionSet { get; private set; }
 
         /// <summary>
@@ -96,6 +99,7 @@ namespace Forms
                 IsSecretSet = true;
             }
         }
+
         private bool _secret;
 
         internal bool IsSecretSet { get; private set; }
@@ -112,6 +116,7 @@ namespace Forms
                 IsMinSet = true;
             }
         }
+
         private int _min;
         private FormFieldType _type;
         private string _description;
@@ -133,6 +138,7 @@ namespace Forms
                 IsMaxLengthSet = true;
             }
         }
+
         /// <summary>
         /// Indicates if <see cref="MaxLength"/> value was explicitely set with the attribute
         /// </summary>

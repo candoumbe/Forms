@@ -24,7 +24,6 @@ namespace Forms.Tests
                     .NotBeAbstract();
         }
 
-
         public static IEnumerable<object[]> FormToSchemaCases
         {
             get

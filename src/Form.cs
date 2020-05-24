@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
 using Newtonsoft.Json.Schema;
 
 namespace Forms
@@ -20,10 +21,10 @@ namespace Forms
         /// </summary>
         public Form() => Fields = Enumerable.Empty<FormField>();
 
+#if NETSTANDARD2_0
         /// <summary>
-        /// Compile a JSON Schema representation of the current <see cref="Form"/>.
-        /// 
-        /// The generated schema can be later used to validate any incoming json against this form
+        /// <para>Compile a JSON Schema representation of the current <see cref="Form"/>.</para>
+        /// <para>The generated schema can be later used to validate any incoming json against this form</para>
         /// 
         /// </summary>
         /// <returns>JSON Schema that can be used to represent the current <see cref="Form"/>.</returns>
@@ -54,16 +55,17 @@ namespace Forms
                         FormFieldType.Number => JSchemaType.Number,
                         _ => JSchemaType.String
                     }
-            });
-                
-                if (field.Required.HasValue && field.Required.Value)
+                });
+
+                if (field.Required ?? false)
                 {
                     schema.Required.Add(field.Name);
                 }
-
             }
 
             return schema;
         }
+
+#endif
     }
 }
