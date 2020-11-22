@@ -6,7 +6,6 @@
     <Description>Adds net5 support</Description>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://dev.azure.com/candoumbe/Forms</PackageProjectUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
