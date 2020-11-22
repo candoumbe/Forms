@@ -39,9 +39,10 @@ namespace Forms
         /// Indicates if the current <see cref="Href"/> is a template url
         /// </summary>
         /// <remarks>
+        /// <para>
         /// A template url is a url with generic placeholder.
-        /// 
-        /// <code>api/patients/{id?}</code> is a template url as it contiains one placeholder
+        /// <code>api/patients/{id?}</code> is a template url as it contiains one placeholder.
+        /// </para>
         /// 
         /// </remarks>
         public bool? Template => Href?.Like("*{?*}*");

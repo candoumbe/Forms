@@ -21,7 +21,7 @@ namespace Forms
         /// </summary>
         public Form() => Fields = Enumerable.Empty<FormField>();
 
-#if NETSTANDARD2_0
+#if !NETSTANDARD1_0
         /// <summary>
         /// <para>Compile a JSON Schema representation of the current <see cref="Form"/>.</para>
         /// <para>The generated schema can be later used to validate any incoming json against this form</para>

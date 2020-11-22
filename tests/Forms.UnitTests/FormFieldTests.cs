@@ -3,7 +3,7 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Forms.Tests
+namespace Forms.UnitTests
 {
     public class FormFieldTests : IDisposable
     {
@@ -15,7 +15,6 @@ namespace Forms.Tests
         }
 
         public void Dispose() => _outputHelper = null;
-
 
         [Fact]
         public void Ctor()

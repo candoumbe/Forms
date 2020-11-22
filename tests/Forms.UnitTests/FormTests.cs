@@ -5,9 +5,11 @@ using Newtonsoft.Json.Schema;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
+using Xunit.Categories;
 
-namespace Forms.Tests
+namespace Forms.UnitTests
 {
+    [UnitTest]
     public class FormTests
     {
         [Fact]
@@ -57,14 +59,14 @@ namespace Forms.Tests
                         new FormField { Name = "Prop3", Max = 10, Type = FormFieldType.Decimal }
                     },
                     (Expression<Func<JSchema, bool>>)(schema => schema != null && schema.Properties.Exactly(3)
-                        && schema.Required.Exactly(1) && schema.Required.Once(propName => propName == "Prop1")
-                        && schema.Properties.Once(prop => prop.Key == "Prop1" && prop.Value.Pattern == "/d{3}")
-                        && schema.Properties.Once(prop => prop.Key == "Prop2"
-                                                        && prop.Value.ReadOnly.HasValue
-                                                        && prop.Value.ReadOnly.Value)
-                        && schema.Properties.Once(prop => prop.Key == "Prop3"
-                                                        && prop.Value.Maximum == 10
-                                                        && prop.Value.Type == JSchemaType.Number)
+                                                                && schema.Required.Exactly(1) && schema.Required.Once(propName => propName == "Prop1")
+                                                                && schema.Properties.Once(prop => prop.Key == "Prop1" && prop.Value.Pattern == "/d{3}")
+                                                                && schema.Properties.Once(prop => prop.Key == "Prop2"
+                                                                                                && prop.Value.ReadOnly.HasValue
+                                                                                                && prop.Value.ReadOnly.Value)
+                                                                && schema.Properties.Once(prop => prop.Key == "Prop3"
+                                                                                                && prop.Value.Maximum == 10
+                                                                                                && prop.Value.Type == JSchemaType.Number)
                     )
                 };
             }

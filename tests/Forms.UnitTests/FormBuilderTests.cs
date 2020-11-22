@@ -14,7 +14,7 @@ using Xunit.Categories;
 using static Forms.FormFieldType;
 using static Newtonsoft.Json.JsonConvert;
 
-namespace Forms.Tests
+namespace Forms.UnitTests
 {
     [UnitTest]
     public class FormBuilderTests

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -161,15 +160,10 @@ namespace Forms
         /// Builds a <see cref="Form"/> instance according to the current configuration.
         /// </summary>
         /// <returns></returns>
-        public Form Build()
+        public Form Build() => new Form
         {
-            Form form = new Form
-            {
-                Meta = _meta,
-                Fields = _fields,
-            };
-
-            return form;
-        }
+            Meta = _meta,
+            Fields = _fields,
+        };
     }
 }

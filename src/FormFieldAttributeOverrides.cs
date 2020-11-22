@@ -88,6 +88,7 @@
                 IsMaxLengthSet = true;
             }
         }
+
         /// <summary>
         /// Indicate if <see cref="MaxLength"/> was explicitely set
         /// </summary>
