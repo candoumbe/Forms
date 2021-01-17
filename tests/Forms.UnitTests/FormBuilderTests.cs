@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Categories;
-
+using Xunit.Sdk;
 using static Forms.FormFieldType;
 using static Newtonsoft.Json.JsonConvert;
 
@@ -28,6 +28,7 @@ namespace Forms.UnitTests
             [FormField(Secret = true)]
             public string RealName { get; set; }
 
+            [FormField(MaxSize = 2)]
             public IEnumerable<string> Cities { get; set; }
 
             public DateTime? BirthDate { get; set; }
@@ -108,15 +109,29 @@ namespace Forms.UnitTests
                         )
                     )
                 };
+
                 yield return new object[]
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.CurrentWinningStreakCount),
                     (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
                         && form.Fields.Once(field => field.Name == nameof(SuperHero.CurrentWinningStreakCount)
-                            && field.Type == Integer
-                            && field.Label == nameof(SuperHero.CurrentWinningStreakCount)
+                                                     && field.Type == Integer
+                                                     && field.Label == nameof(SuperHero.CurrentWinningStreakCount)
                         )
+                    )
+                };
+
+                yield return new object[]
+                {
+                    new FormBuilder<SuperHero>()
+                        .AddOptions(x => x.Cities, options: new []{ "Metropolis", "Gotham", "Central city" }),
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Exactly(1)
+                                                          && form.Fields.Once(field => field.Name == nameof(SuperHero.Cities)
+                                                                                       && field.Type == FormFieldType.Array
+                                                                                       && field.MinSize == null
+                                                                                       && field.MaxSize == 2
+                                                          )
                     )
                 };
             }
@@ -130,12 +145,12 @@ namespace Forms.UnitTests
 
             // Act
             Form form = builder.Build();
-            _outputHelper.WriteLine($"Form built : {SerializeObject(form)}");
+            _outputHelper.WriteLine($"Form built : {form}");
 
             // Assert
             form.Fields.Should()
-                .NotBeNull().And
-                .NotContainNulls();
+                       .NotBeNull().And
+                       .NotContainNulls();
             form.Should()
                 .Match(formExpectation);
         }

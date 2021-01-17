@@ -22,21 +22,34 @@ namespace Forms.UnitTests
         public void Ctor_Should_Build_Valid_Instance()
         {
             // Act
-            FormFieldAttribute attribute = new FormFieldAttribute();
+            FormFieldAttribute attribute = new();
 
             // Assert
-            attribute.Type.Should().Be(FormFieldType.String);
+            attribute.Type.Should()
+                          .Be(FormFieldType.String);
             attribute.Enabled.Should()
-                .BeFalse();
+                             .BeFalse();
             attribute.Required.Should()
-                .BeFalse();
+                              .BeFalse();
             attribute.Pattern.Should()
-                .BeNull();
+                             .BeNull();
             attribute.Relations.Should()
-                .BeAssignableTo<IEnumerable<string>>().And
-                .BeEmpty();
+                               .BeAssignableTo<IEnumerable<string>>().And
+                               .BeEmpty();
             attribute.Min.Should()
-                .Be(0);
+                         .Be(0);
+            attribute.MinLength.Should()
+                               .Be(0);
+
+            attribute.Max.Should()
+                         .Be(0);
+            attribute.MaxLength.Should()
+                               .Be(0);
+
+            attribute.MinSize.Should()
+                             .Be(0);
+            attribute.MaxSize.Should()
+                             .Be(0);
         }
 
         [Fact]

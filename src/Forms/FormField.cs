@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Forms
@@ -14,6 +15,8 @@ namespace Forms
     [JsonObject]
     public class FormField
     {
+        private IEnumerable<FormFieldOption> _options;
+
         /// <summary>
         /// indicates whether or not the field value may be modified or submitted to a linked resource location. 
         /// </summary>
@@ -24,7 +27,7 @@ namespace Forms
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Type of the field 
+        /// Type of the field
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public FormFieldType Type { get; set; }
@@ -95,5 +98,30 @@ namespace Forms
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
+
+        /// <summary>
+        /// List of options
+        /// </summary>
+        public IEnumerable<FormFieldOption> Options
+        {
+            get => _options;
+            set
+            {
+                _options = value;
+                Type = FormFieldType.Array;
+            }
+        }
+
+        /// <summary>
+        /// a non-negative integer that specifies the minimum number of field values that may be submitted when the field type value 
+        /// equals <see cref="FormFieldType.Array"/> or <see cref="FormFieldType.Set"/>
+        /// </summary>
+        public int? MinSize { get; set; }
+
+        /// <summary>
+        /// a non-negative integer that specifies the maximum number of field values that may be submitted when the field type value 
+        /// equals <see cref="FormFieldType.Array"/> or <see cref="FormFieldType.Set"/>
+        /// </summary>
+        public int? MaxSize { get; set; }
     }
 }

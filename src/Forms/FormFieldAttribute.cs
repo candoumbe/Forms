@@ -118,10 +118,27 @@ namespace Forms
         }
 
         private int _min;
+
+        /// <summary>
+        /// Max value for the field
+        /// </summary>
+        public int Max
+        {
+            get => _max;
+            set
+            {
+                _max = value;
+                IsMaxSet = true;
+            }
+        }
+
+        private int _max;
+
         private FormFieldType _type;
         private string _description;
 
         internal bool IsMinSet { get; private set; }
+        internal bool IsMaxSet { get; private set; }
 
         private int _maxLength;
 
@@ -143,6 +160,69 @@ namespace Forms
         /// Indicates if <see cref="MaxLength"/> value was explicitely set with the attribute
         /// </summary>
         internal bool IsMaxLengthSet { get; private set; }
+
+        private int _minLength;
+
+        /// <summary>
+        /// Minimum length of the string
+        /// </summary>
+        /// <remarks>This property is only relevant for string or array</remarks>
+        public int MinLength
+        {
+            get => _minLength;
+            set
+            {
+                _minLength = value;
+                IsMinLengthSet = true;
+            }
+        }
+
+        /// <summary>
+        /// Indicates if <see cref="MinLength"/> value was explicitely set with the attribute
+        /// </summary>
+        internal bool IsMinLengthSet { get; private set; }
+
+        private int _minSize;
+
+        /// <summary>
+        /// Minimum number of element to select
+        /// </summary>
+        /// <remarks>This property is only relevant for string or array</remarks>
+        public int MinSize
+        {
+            get => _minSize;
+            set
+            {
+                _minSize = value;
+                IsMinSizeSet = true;
+            }
+        }
+
+        /// <summary>
+        /// Indicates if <see cref="MinSize"/> value was explicitely set with the attribute
+        /// </summary>
+        internal bool IsMinSizeSet { get; private set; }
+
+        private int _maxSize;
+
+        /// <summary>
+        /// Maximum number of elements to select
+        /// </summary>
+        /// <remarks>This property is only relevant for string or array</remarks>
+        public int MaxSize
+        {
+            get => _maxSize;
+            set
+            {
+                _maxSize = value;
+                IsMaxSizeSet = true;
+            }
+        }
+
+        /// <summary>
+        /// Indicates if <see cref="MinSize"/> value was explicitely set with the attribute
+        /// </summary>
+        internal bool IsMaxSizeSet { get; private set; }
 
         /// <summary>
         /// Builds a new <see cref="FormFieldAttribute"/>
