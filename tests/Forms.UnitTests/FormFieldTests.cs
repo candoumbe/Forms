@@ -1,26 +1,26 @@
 ﻿using FluentAssertions;
+using FsCheck;
+using FsCheck.Xunit;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Forms.UnitTests
 {
-    public class FormFieldTests : IDisposable
+    public class FormFieldTests
     {
-        private ITestOutputHelper _outputHelper;
+        private readonly ITestOutputHelper _outputHelper;
 
-        public FormFieldTests(ITestOutputHelper outputHelper)
-        {
-            _outputHelper = outputHelper;
-        }
-
-        public void Dispose() => _outputHelper = null;
+        public FormFieldTests(ITestOutputHelper outputHelper) => _outputHelper = outputHelper;
 
         [Fact]
-        public void Ctor()
+        public void Ctor_build_valid_instance()
         {
             // Act
-            FormField instance = new FormField();
+            FormField instance = new();
 
             // Assert
             instance.Description.Should().BeNull();
@@ -36,6 +36,19 @@ namespace Forms.UnitTests
             instance.Required.Should().BeNull();
             instance.Secret.Should().BeNull();
             instance.Type.Should().Be(FormFieldType.String);
+        }
+
+        [Property]
+        public Property Setting_Options_should_change_type_to_Array(NonEmptyArray<string> values)
+        {
+            // Arrange
+            FormField field = new();
+
+            // Act
+            field.Options = values.Item.Select(value => new FormFieldOption(value, value));
+
+            // Assert
+            return (field.Type == FormFieldType.Array).ToProperty();
         }
     }
 }
