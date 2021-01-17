@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Newtonsoft.Json.Schema;
@@ -65,7 +66,8 @@ namespace Forms
 
             return schema;
         }
-
 #endif
+
+        public override string ToString() => this.Jsonify();
     }
 }

@@ -18,11 +18,12 @@ trigger:
   branches:
     include:
       - feature/*
-      - fix/*
+      - hotfix/*
   paths:
     exclude:
       - docs/*
       - README.md
+      - CHANGELOG.md
 
 stages:
   - stage: windows_latest
@@ -49,3 +50,7 @@ stages:
             inputs:
               artifactName: tests-results
               pathtoPublish: 'output/tests-results'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: coverage-history
+              pathtoPublish: 'output/coverage-history'
