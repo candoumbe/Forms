@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] / 2021-01-17
+## [0.2.1] / 2021-01-18
 - Added [`FormFieldOption`](/src/Forms/FormFieldOption.cs)
+- Fixed failing build pipeline
 
 ## [0.1.0]
 - Initial release
+

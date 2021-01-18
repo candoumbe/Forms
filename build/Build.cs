@@ -64,7 +64,7 @@ namespace Pipelines
     )]
     [AzurePipelines(
         AzurePipelinesImage.WindowsLatest,
-        InvokedTargets = new[] { nameof(Tests), nameof(Coverage) nameof(Pack) },
+        InvokedTargets = new[] { nameof(Tests), nameof(Coverage), nameof(Pack) },
         NonEntryTargets = new[] { nameof(Restore), nameof(Changelog) },
         ExcludedTargets = new[] { nameof(Clean) },
         PullRequestsAutoCancel = true,
