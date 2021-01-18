@@ -31,6 +31,13 @@ stages:
     pool:
       vmImage: 'windows-latest'
     jobs:
+      - job: Coverage
+        displayName: 'Coverage'
+        dependsOn: [  ]
+        steps:
+          - task: CmdLine@2
+            inputs:
+              script: './build.cmd Coverage --skip'
       - job: Compile
         displayName: 'Compile'
         dependsOn: [  ]
