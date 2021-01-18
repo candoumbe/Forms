@@ -31,7 +31,7 @@ namespace Pipelines
     [AzurePipelines(
         suffix: "release",
         AzurePipelinesImage.WindowsLatest,
-        InvokedTargets = new[] { nameof(Pack) },
+        InvokedTargets = new[] { nameof(Coverage), nameof(Pack) },
         NonEntryTargets = new[] { nameof(Restore), nameof(Changelog) },
         ExcludedTargets = new[] { nameof(Clean) },
         PullRequestsAutoCancel = true,
@@ -46,7 +46,7 @@ namespace Pipelines
     [AzurePipelines(
         suffix: "pull-request",
         AzurePipelinesImage.WindowsLatest,
-        InvokedTargets = new[] { nameof(Tests) },
+        InvokedTargets = new[] { nameof(Tests), nameof(Coverage) },
         NonEntryTargets = new[] { nameof(Restore), nameof(Changelog) },
         ExcludedTargets = new[] { nameof(Clean) },
         PullRequestsAutoCancel = true,
@@ -64,7 +64,7 @@ namespace Pipelines
     )]
     [AzurePipelines(
         AzurePipelinesImage.WindowsLatest,
-        InvokedTargets = new[] { nameof(Pack) },
+        InvokedTargets = new[] { nameof(Tests), nameof(Coverage) nameof(Pack) },
         NonEntryTargets = new[] { nameof(Restore), nameof(Changelog) },
         ExcludedTargets = new[] { nameof(Clean) },
         PullRequestsAutoCancel = true,
@@ -215,7 +215,8 @@ namespace Pipelines
 
         public Target Coverage => _ => _
             .Description("Gathers and report code coverage")
-            .DependsOn(Tests)
+            // TODO Uncommented the following line once https://github.com/nuke-build/nuke/issues/562 is solved !
+            //.DependsOn(Tests)
             .Consumes(Tests, TestResultDirectory / "*.xml", TestResultDirectory / "*.lcov.info")
             .Executes(() =>
             {
