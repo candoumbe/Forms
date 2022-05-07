@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1775E94A-B49B-4E52-8305-089EA19370AF}"
 EndProject
@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azure-pipelines.yaml = azure-pipelines.yaml
 		Directory.build.props = Directory.build.props
 		Nuget.config = Nuget.config
+		renovate.json = renovate.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forms.UnitTests", "tests\Forms.UnitTests\Forms.UnitTests.csproj", "{56570F55-C623-4C28-9BE0-012092BB088D}"
@@ -29,8 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FC973B91-A56C-4F9A-806E-BBECB7205925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC973B91-A56C-4F9A-806E-BBECB7205925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56570F55-C623-4C28-9BE0-012092BB088D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56570F55-C623-4C28-9BE0-012092BB088D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56570F55-C623-4C28-9BE0-012092BB088D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +38,8 @@ Global
 		{C708C912-0C8A-4509-AC18-114B195A87F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C708C912-0C8A-4509-AC18-114B195A87F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C708C912-0C8A-4509-AC18-114B195A87F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC973B91-A56C-4F9A-806E-BBECB7205925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC973B91-A56C-4F9A-806E-BBECB7205925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
