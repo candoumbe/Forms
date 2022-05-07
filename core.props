@@ -58,7 +58,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard1.3'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard1.0'">
     <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'false' and '$(MSBuildProjectName)' != '_build'">
