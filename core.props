@@ -40,13 +40,11 @@
   <Choose>
     <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFramework), '^net\d\.0$'))">
       <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="10.3.6" />
         <PackageReference Include="Ultimately" Version="2.1.1" />
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="8.6.3" />
         <PackageReference Include="Optional" Version="4.0.0"/>
       </ItemGroup>
     </Otherwise>
@@ -57,9 +55,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard1.0'">
-    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'false' and '$(MSBuildProjectName)' != '_build'">
       <None Include="..\..\README.md" Pack="true" PackagePath="\"/>

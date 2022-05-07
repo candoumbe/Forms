@@ -3,12 +3,4 @@
     <Authors>Cyrille NDOUMBE</Authors>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Roslynator.Analyzers" Version="3.*">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Candoumbe.MiscUtilities" Version="0.1.0" PrivateAssets="all"/>
-  </ItemGroup>
 </Project>
