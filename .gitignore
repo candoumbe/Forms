@@ -248,3 +248,4 @@ ModelManifest.xml
 .fake/
 .vscode/
 /output/
+/.nuke/temp

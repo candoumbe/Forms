@@ -101,7 +101,6 @@
             "type": "string",
             "enum": [
               "AddGithubRelease",
-              "Benchmarks",
               "Changelog",
               "Clean",
               "Coldfix",
@@ -135,7 +134,6 @@
             "type": "string",
             "enum": [
               "AddGithubRelease",
-              "Benchmarks",
               "Changelog",
               "Clean",
               "Coldfix",

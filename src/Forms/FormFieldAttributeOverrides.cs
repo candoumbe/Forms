@@ -11,7 +11,7 @@
 
         /// <summary>
         /// Description of the <see cref="FormField"/>
-        /// </summary
+        /// </summary>
         public string Description
         {
             get => _description;
@@ -33,7 +33,7 @@
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Indicates if the value should be displayed as a password (<c>true<>) or not(<c>false</c>).
+        /// Indicates if the value should be displayed as a password (<see langword="true"/>) or not (<see langword="false"/>).
         /// </summary>
         public bool? Secret { get; set; }
 
