@@ -34,7 +34,7 @@ namespace Forms.ContinuousIntegration
 
     [GitHubActions(
         "integration",
-        GitHubActionsImage.MacOsLatest,
+        GitHubActionsImage.UbuntuLatest,
         OnPushBranchesIgnore = new[] { MainBranchName },
         PublishArtifacts = true,
         InvokedTargets = new[] { nameof(UnitTests), nameof(ReportCoverage), nameof(Pack) },
@@ -55,7 +55,7 @@ namespace Forms.ContinuousIntegration
     )]
     [GitHubActions(
         "delivery",
-        GitHubActionsImage.MacOsLatest,
+        GitHubActionsImage.UbuntuLatest,
         OnPushBranches = new[] { MainBranchName, ReleaseBranchPrefix + "/*" },
         InvokedTargets = new[] { nameof(UnitTests), nameof(Publish), nameof(AddGithubRelease) },
         EnableGitHubToken = true,
