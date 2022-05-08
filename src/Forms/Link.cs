@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Forms
 {
@@ -18,7 +19,11 @@ namespace Forms
         /// <summary>
         /// Relation of the resource that <see cref="Link"/> points to with the current resource
         /// </summary>
-        public string Relation { get; set; }
+#if NETSTANDARD
+        public IEnumerable<string> Relations { get; set; } 
+#else
+        public IReadOnlySet<string> Relations { get; set; } 
+#endif
 
         /// <summary>
         /// Http method to used in conjunction with <see cref="Href"/>.
@@ -41,11 +46,18 @@ namespace Forms
         /// <remarks>
         /// <para>
         /// A template url is a url with generic placeholder.
-        /// <code>api/patients/{id?}</code> is a template url as it contiains one placeholder.
+        /// <c>api/patients/{id?}</c> is a template url as it contiains one placeholder named <c>id</c>.
         /// </para>
-        /// 
         /// </remarks>
         public bool? Template => Href?.Like("*{?*}*");
+
+        /// <summary>
+        /// Builds a new <see cref="Link"/> instance.
+        /// </summary>
+        public Link()
+        {
+            Relations = new HashSet<string>();
+        }
 
         /// <inheritdoc/>
         public override string ToString() => this.Jsonify();

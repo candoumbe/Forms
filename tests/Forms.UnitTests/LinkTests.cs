@@ -20,8 +20,8 @@ namespace Forms.UnitTests
                      .BeNull();
             link.Method.Should()
                        .BeNull();
-            link.Relation.Should()
-                         .BeNull();
+            link.Relations.Should()
+                         .BeEmpty();
             link.Template.Should()
                          .BeNull();
             link.Title.Should()
