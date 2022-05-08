@@ -147,11 +147,6 @@ namespace Forms.ContinuousIntegration
         /// </summary>
         public AbsolutePath CoverageReportHistoryDirectory => OutputDirectory / "coverage-history";
 
-        /// <summary>
-        /// Directory where to publish benchmark results.
-        /// </summary>
-        public AbsolutePath BenchmarkDirectory => OutputDirectory / "benchmarks";
-
         public const string MainBranchName = "main";
 
         public const string DevelopBranch = "develop";
@@ -621,31 +616,6 @@ namespace Forms.ContinuousIntegration
                 {
                     Information("Release '{MajorMinorPatchVersion}' already exists - skipping ", MajorMinorPatchVersion);
                 }
-            });
-
-        public Target Benchmarks => _ => _
-            .Description("Run all performance tests.")
-            .DependsOn(Compile)
-            .TriggeredBy(UnitTests)
-            .OnlyWhenDynamic(() => IsServerBuild)
-            .Produces(BenchmarkDirectory / "*")
-            .Executes(() =>
-            {
-                IEnumerable<Project> benchmarkProjects = Solution.GetProjects("*.PerformanceTests");
-                benchmarkProjects.ForEach(csproj =>
-                {
-                    DotNetRun(s =>
-                    {
-                        IReadOnlyCollection<string> frameworks = csproj.GetTargetFrameworks();
-                        return s.SetConfiguration(Configuration.Release)
-                                .SetProjectFile(csproj)
-                                .SetProcessWorkingDirectory(ArtifactsDirectory)
-                                .SetProcessArgumentConfigurator(args => args.Add("-- --filter {0}", "*", customValue: true)
-                                                                            .Add("--artifacts {0}", BenchmarkDirectory)
-                                                                            .Add("--join"))
-                                .CombineWith(frameworks, (setting, framework) => setting.SetFramework(framework));
-                    });
-                });
             });
     }
 }
