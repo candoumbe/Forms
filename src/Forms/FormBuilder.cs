@@ -54,7 +54,7 @@ namespace Forms
         /// <typeparam name="TProperty"></typeparam>
         /// <param name="property"></param>
         /// <param name="attributes">Overrides field's attributes</param>
-        /// <returns></returns>
+        /// <returns>The current instance.</returns>
         public FormBuilder<T> AddField<TProperty>(Expression<Func<T, TProperty>> property, FormFieldAttributeOverrides attributes = null)
         {
             if (property.Body is MemberExpression me)
@@ -185,6 +185,14 @@ namespace Forms
             });
         }
 
+        /// <summary>
+        /// Ands a field to the <see cref="Form"/>'s configuration.
+        /// </summary>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="property"></param>
+        /// <param name="options"></param>
+        /// <param name="attributeOverrides"></param>
+        /// <returns></returns>
         public FormBuilder<T> AddOptions<TProperty>(Expression<Func<T, TProperty>> property,
                                                     IEnumerable<FormFieldOption> options,
                                                     FormFieldAttributeOverrides attributeOverrides = null)
@@ -203,6 +211,14 @@ namespace Forms
             return this;
         }
 
+        /// <summary>
+        /// Adds a field to the <see cref="Form"/>'s configuration.
+        /// </summary>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="property">Defines the property for which options will be added</param>
+        /// <param name="options"></param>
+        /// <param name="attributeOverrides"></param>
+        /// <returns></returns>
         public FormBuilder<T> AddOptions<TProperty>(Expression<Func<T, TProperty>> property,
                                                     IEnumerable<string> options,
                                                     FormFieldAttributeOverrides attributeOverrides = null)

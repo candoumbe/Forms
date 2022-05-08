@@ -68,6 +68,7 @@ namespace Forms
         }
 #endif
 
+        ///<inheritdoc/>
         public override string ToString() => this.Jsonify();
     }
 }
