@@ -15,6 +15,9 @@ namespace Forms
     /// </remarks>
     public class Form : IonResource
     {
+        /// <summary>
+        /// Fields of the form
+        /// </summary>
         public IEnumerable<FormField> Fields { get; set; }
 
         /// <summary>

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Removed `Ultimately` dependency
-- Changed `Link.Relation` from `string` to `array` [BREAKING]
+- Changed `Link.Relation` from `string` to `string[]` [BREAKING]
 
 ## [0.2.1] / 2021-01-18
 - Added [`FormFieldOption`](/src/Forms/FormFieldOption.cs)
