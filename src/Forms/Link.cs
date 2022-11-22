@@ -17,12 +17,12 @@ namespace Forms
         public string Href { get; set; }
 
         /// <summary>
-        /// Relation of the resource that <see cref="Link"/> points to with the current resource
+        /// Relations of the resource that <see cref="Link"/> points to with the current resource
         /// </summary>
 #if NETSTANDARD
         public IEnumerable<string> Relations { get; set; } 
 #else
-        public IReadOnlySet<string> Relations { get; set; } 
+        public IReadOnlySet<string> Relations { get; set; }
 #endif
 
         /// <summary>

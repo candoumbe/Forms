@@ -75,13 +75,13 @@ namespace Forms
         public int? MinLength { get; set; }
 
         /// <summary>
-        /// Indicates that <see cref="Value"/>value must be greater than or equal to the specified <see cref="Min"/> value
+        /// Indicates that value must be greater than or equal to the specified <see cref="Min"/> value
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public float? Min { get; set; }
 
         /// <summary>
-        /// Indicates that <see cref="Value"/>value must be less than or equal to the specified <see cref="Max"/> value
+        /// Indicates that value must be less than or equal to the specified <see cref="Max"/> value
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public float? Max { get; set; }
