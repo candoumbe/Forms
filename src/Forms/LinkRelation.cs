@@ -3,9 +3,6 @@
     /// <summary>
     /// Link relation type representation (see http://www.iana.org/assignments/link-relations/link-relations.xhtml)
     /// </summary>
-    /// <remarks>
-    ///     
-    /// </remarks>
     public static class LinkRelation
     {
         /// <summary>

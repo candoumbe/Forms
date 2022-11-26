@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
+
 using FsCheck;
 using FsCheck.Xunit;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using System.Linq;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -41,11 +41,12 @@ namespace Forms.UnitTests
         [Property]
         public Property Setting_Options_should_change_type_to_Array(NonEmptyArray<string> values)
         {
-            // Arrange
-            FormField field = new();
-
             // Act
-            field.Options = values.Item.Select(value => new FormFieldOption(value, value));
+            FormField field = new()
+            {
+                // Act
+                Options = values.Item.Select(value => new FormFieldOption(value, value))
+            };
 
             // Assert
             return (field.Type == FormFieldType.Array).ToProperty();
