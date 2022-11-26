@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../core.props" />
   <PropertyGroup>
@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageDownload Include="ReportGenerator" Version="[5.1.12]" />
-    <PackageReference Include="Candoumbe.Pipelines" Version="0.2.0-alpha0039" />
+    <PackageReference Include="Candoumbe.Pipelines" Version="0.2.0-alpha0040" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.8.1]" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
   </ItemGroup>
