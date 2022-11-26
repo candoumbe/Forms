@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Schema;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Newtonsoft.Json.Schema;
 
 namespace Forms
 {
@@ -13,7 +13,11 @@ namespace Forms
     ///     This class, inspired by ION spec (see http://ionwg.org/draft-ion.html#forms for more details), 
     ///     can be used to describe a 
     /// </remarks>
-    public class Form : IonResource
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+    public record Form : IonResource
+#else
+    public class Form : IonResource 
+#endif
     {
         /// <summary>
         /// Fields of the form
@@ -72,6 +76,11 @@ namespace Forms
 #endif
 
         ///<inheritdoc/>
-        public override string ToString() => this.Jsonify();
+        public override string ToString()
+#if NETSTANDARD1_0
+        => this.Jsonify(new() { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore });
+#else
+        => this.Jsonify(new(System.Text.Json.JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault });
+#endif
     }
 }

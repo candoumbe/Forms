@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Optional;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-
-using Optional;
 
 using static Forms.FormFieldType;
 
@@ -16,13 +16,13 @@ namespace Forms
     /// <typeparam name="T">Type to build a <see cref="Form"/> for.</typeparam>
     public class FormBuilder<T>
     {
-        private static readonly HashSet<Type> _dateTypes = new HashSet<Type>
+        private static readonly HashSet<Type> DateTypes = new HashSet<Type>
         {
             typeof(DateTime), typeof(DateTime?),
             typeof(DateTimeOffset), typeof(DateTimeOffset?),
         };
 
-        private static readonly HashSet<Type> _numericTypes = new HashSet<Type>
+        private static readonly HashSet<Type> NumericTypes = new HashSet<Type>
         {
             typeof(int), typeof(int?),
             typeof(float), typeof(float?),
@@ -62,10 +62,18 @@ namespace Forms
                 FormField field = new FormField { Name = me.Member.Name };
                 Option<FormFieldAttribute> optionalFormFieldAttribute = me.Member.GetCustomAttribute<FormFieldAttribute>()
                     .SomeNotNull();
-                UpdateAttributesField(property, field, optionalFormFieldAttribute, attributes.SomeNotNull());
+                field = UpdateAttributesField(property, field, optionalFormFieldAttribute, attributes.SomeNotNull());
 
+#if NET5_0_OR_GREATER
+                field = field with
+                {
+                    Label = field.Name,
+                    Enabled = attributes?.Enabled
+                };
+#else
                 field.Label = field.Name;
                 field.Enabled = attributes?.Enabled;
+#endif
 
                 _fields.Add(field);
             }
@@ -73,16 +81,16 @@ namespace Forms
             return this;
         }
 
-        private static void UpdateAttributesField<TProperty>(Expression<Func<T, TProperty>> property,
+        private static FormField UpdateAttributesField<TProperty>(Expression<Func<T, TProperty>> property,
                                                              FormField field,
                                                              Option<FormFieldAttribute> optionalFormFieldAttribute,
                                                              Option<FormFieldAttributeOverrides> optionalAttributesOverride)
         {
-            if (_dateTypes.Contains(property.ReturnType))
+            if (DateTypes.Contains(property.ReturnType))
             {
                 field.Type = FormFieldType.DateTime;
             }
-            else if (_numericTypes.Contains(property.ReturnType))
+            else if (NumericTypes.Contains(property.ReturnType))
             {
                 field.Type = Integer;
             }
@@ -92,80 +100,157 @@ namespace Forms
                 {
                     if (attr.IsDescriptionSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Description = attr.Description };
+#else
                         field.Description = attr.Description;
+#endif
                     }
                     if (attr.IsSecretSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Secret = attr.Secret };
+#else
                         field.Secret = attr.Secret;
+#endif
                     }
 
                     if (attr.IsMinSet)
                     {
-                        field.Min = attr.Min;
+#if NET5_0_OR_GREATER
+                        field = field with { MinSize = attr.MinSize };
+#else
+                        field.MinSize = attr.MinSize;
+#endif
                     }
 
+#if NET5_0_OR_GREATER
+                    field = field with { Pattern = attr.Pattern };
+#else
                     field.Pattern = attr.Pattern;
+#endif
+
                     if (attr.IsTypeSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Type = attr.Type };
+#else
                         field.Type = attr.Type;
+#endif
                     }
+
                     if (attr.IsMinSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Min = attr.Min };
+#else
                         field.Min = attr.Min;
+#endif
                     }
 
                     if (attr.IsMaxSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Max = attr.Max };
+#else
                         field.Max = attr.Max;
+#endif
                     }
 
                     if (attr.IsMinLengthSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { MinLength = attr.MinLength };
+#else
                         field.MinLength = attr.MinLength;
+#endif
                     }
 
                     if (attr.IsMaxLengthSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { MaxLength = attr.MaxLength };
+#else
                         field.MaxLength = attr.MaxLength;
+#endif
                     }
+
                     if (attr.IsTypeSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Type = attr.Type };
+#else
                         field.Type = attr.Type;
+#endif
                     }
 
                     if (attr.IsMaxSizeSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { MaxSize = attr.MaxSize };
+#else
                         field.MaxSize = attr.MaxSize;
+#endif
                     }
 
                     if (attr.IsEnabledSet)
                     {
+#if NET5_0_OR_GREATER
+                        field = field with { Enabled = attr.Enabled };
+#else
                         field.Enabled = attr.Enabled;
+#endif
                     }
                 });
 
-            optionalAttributesOverride.MatchSome((attrs) =>
+            optionalAttributesOverride.MatchSome((attr) =>
             {
-                if (attrs.Min.HasValue)
+                if (attr.Min.HasValue)
                 {
-                    field.Min = attrs.Min;
+#if NET5_0_OR_GREATER
+                    field = field with { Min = attr.Min };
+#else
+                    field.Min = attr.Min;
+#endif
                 }
-                if (attrs.Secret.HasValue)
+                if (attr.Secret.HasValue)
                 {
-                    field.Secret = attrs.Secret;
+#if NET5_0_OR_GREATER
+                    field = field with { Secret = attr.Secret };
+#else
+                    field.Secret = attr.Secret;
+#endif
                 }
-                if (attrs.IsDescriptionSet)
+                if (attr.IsDescriptionSet)
                 {
-                    field.Description = attrs.Description;
+#if NET5_0_OR_GREATER
+                    field = field with { Description = attr.Description };
+#else
+                    field.Description = attr.Description;
+#endif
                 }
-                field.Label = attrs.Label ?? field.Name;
-                if (attrs.Max.HasValue)
+
+#if NET5_0_OR_GREATER
+                field = field with { Label = attr.Label ?? field.Name };
+#else
+                field.Label = attr.Label ?? field.Name;
+#endif
+
+                if (attr.Max.HasValue)
                 {
-                    field.Max = attrs.Max;
+#if NET5_0_OR_GREATER
+                    field = field with { Max = attr.Max };
+#else
+                    field.Max = attr.Max;
+#endif
                 }
-                if (attrs.Pattern != null)
+                if (attr.Pattern is not null)
                 {
-                    field.Pattern = attrs.Pattern;
+#if NET5_0_OR_GREATER
+                    field = field with { Pattern = attr.Pattern };
+#else
+                    field.Pattern = attr.Pattern;
+#endif
                 }
 
                 // if (attrs.IsMinLengthSet)
@@ -173,16 +258,17 @@ namespace Forms
                 //     field.MaxLength = attrs.MaxLength;
                 // }
 
-                if (attrs.IsMaxLengthSet)
+                if (attr.IsMaxLengthSet)
                 {
-                    field.MaxLength = attrs.MaxLength;
-                }
-
-                if (attrs.IsTypeSet)
-                {
-                    field.Type = attrs.Type;
+#if NET5_0_OR_GREATER
+                    field = field with { MaxLength = attr.MaxLength };
+#else
+                    field.MaxLength = attr.MaxLength;
+#endif
                 }
             });
+
+            return field;
         }
 
         /// <summary>
@@ -202,9 +288,23 @@ namespace Forms
             Option<FormFieldAttribute> optionalFormFieldAttribute = me.Member.GetCustomAttribute<FormFieldAttribute>()
                                                                              .SomeNotNull();
 
-            field.Options = options;
+#if NET5_0_OR_GREATER
+            field = field with
+            {
+                Options = options,
+#if NET6_0_OR_GREATER
+                MaxSize = options.TryGetNonEnumeratedCount(out int count) ? count : options.Count()
+#else
+                MaxSize = options.Count()
+#endif
 
-            UpdateAttributesField(property, field, optionalFormFieldAttribute, attributeOverrides.SomeNotNull());
+            };
+
+#else
+            field.Options = options;
+#endif
+
+            field = UpdateAttributesField(property, field, optionalFormFieldAttribute, attributeOverrides.SomeNotNull());
 
             _fields.Add(field);
 

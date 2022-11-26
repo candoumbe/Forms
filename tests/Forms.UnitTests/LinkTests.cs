@@ -13,7 +13,7 @@ namespace Forms.UnitTests
     [Feature(nameof(Link))]
     public class LinkTests
     {
-        private static readonly Faker faker = new();
+        private static readonly Faker Faker = new();
 
         [Fact]
         public void Ctor_builds_valid_instance()
@@ -55,7 +55,7 @@ namespace Forms.UnitTests
         public void Given_existing_link_already_relations_When_adding_a_relation_that_already_exists_Then_there_should_be_no_duplicates()
         {
             // Arrange
-            string relation = faker.Lorem.Word();
+            string relation = Faker.Lorem.Word();
 
             // Act
 #if NET5_0_OR_GREATER

@@ -1,18 +1,15 @@
 ﻿using FluentAssertions;
 
-using Newtonsoft.Json;
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Json;
 
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Categories;
-using Xunit.Sdk;
+
 using static Forms.FormFieldType;
-using static Newtonsoft.Json.JsonConvert;
 
 namespace Forms.UnitTests
 {
@@ -51,11 +48,12 @@ namespace Forms.UnitTests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.Nickname),
-                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
-                        && form.Fields.Once(field => field.Name == nameof(SuperHero.Nickname)
-                            && field.Type == FormFieldType.String
-                            && field.Label == nameof(SuperHero.Nickname)
-                        )
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null
+                                                           && form.Fields.Once()
+                                                           && form.Fields.Once(field => field.Name == nameof(SuperHero.Nickname)
+                                                               && field.Type == FormFieldType.String
+                                                               && field.Label == nameof(SuperHero.Nickname)
+                                                           )
                     )
                 };
 
@@ -76,7 +74,7 @@ namespace Forms.UnitTests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.RealName, new FormFieldAttributeOverrides { Secret = false }),
-                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Once()
                         && form.Fields.Once(field => field.Name == nameof(SuperHero.RealName)
                             && field.Type == FormFieldType.String
                             && field.Label == nameof(SuperHero.RealName)
@@ -89,7 +87,7 @@ namespace Forms.UnitTests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.RealName, new FormFieldAttributeOverrides { Description = "Secret identity of the hero" }),
-                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Once()
                         && form.Fields.Once(field => field.Name == nameof(SuperHero.RealName)
                             && field.Type == FormFieldType.String
                             && field.Label == nameof(SuperHero.RealName)
@@ -102,7 +100,7 @@ namespace Forms.UnitTests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.BirthDate),
-                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Once()
                         && form.Fields.Once(field => field.Name == nameof(SuperHero.BirthDate)
                             && field.Type == FormFieldType.DateTime
                             && field.Label == nameof(SuperHero.BirthDate)
@@ -114,7 +112,7 @@ namespace Forms.UnitTests
                 {
                     new FormBuilder<SuperHero>()
                         .AddField(x => x.CurrentWinningStreakCount),
-                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Count() == 1
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Once()
                         && form.Fields.Once(field => field.Name == nameof(SuperHero.CurrentWinningStreakCount)
                                                      && field.Type == Integer
                                                      && field.Label == nameof(SuperHero.CurrentWinningStreakCount)
@@ -126,11 +124,13 @@ namespace Forms.UnitTests
                 {
                     new FormBuilder<SuperHero>()
                         .AddOptions(x => x.Cities, options: new []{ "Metropolis", "Gotham", "Central city" }),
-                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Exactly(1)
+                    (Expression<Func<Form, bool>>)(form => form.Fields != null && form.Fields.Once()
                                                           && form.Fields.Once(field => field.Name == nameof(SuperHero.Cities)
                                                                                        && field.Type == FormFieldType.Array
-                                                                                       && field.MinSize == null
-                                                                                       && field.MaxSize == 2
+                                                                                       && field.Options != null
+                                                                                       && field.Options.Once(opt => opt.Label == "Metropolis" && Equals(opt.Value, opt.Label))
+                                                                                       && field.Options.Once(opt => opt.Label == "Gotham" && Equals(opt.Value, opt.Label))
+                                                                                       && field.Options.Once(opt => opt.Label == "Central city" && Equals(opt.Value, opt.Label))
                                                           )
                     )
                 };
@@ -141,11 +141,11 @@ namespace Forms.UnitTests
         [MemberData(nameof(StronglyTypedBuilderCases))]
         public void StronglyTypedBuilder(FormBuilder<SuperHero> builder, Expression<Func<Form, bool>> formExpectation)
         {
-            _outputHelper.WriteLine($"FormBuilder : {SerializeObject(builder, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore })}");
+            _outputHelper.WriteLine($"FormBuilder :  {builder.Jsonify(new(JsonSerializerDefaults.Web))}");
 
             // Act
             Form form = builder.Build();
-            _outputHelper.WriteLine($"Form built : {form}");
+            _outputHelper.WriteLine($"Form built : {form.Jsonify(new(JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull })}");
 
             // Assert
             form.Fields.Should()
