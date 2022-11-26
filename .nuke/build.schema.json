@@ -10,11 +10,6 @@
           "type": "boolean",
           "description": "Indicates if any changes should be stashed automatically prior to switching branch (Default : true)"
         },
-        "CodecovToken": {
-          "type": "string",
-          "description": "The API key used to push code coverage to CodeCov",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
         "Configuration": {
           "type": "string",
           "enum": []
@@ -130,7 +125,6 @@
               "Pack",
               "Publish",
               "Release",
-              "ReportCoverage",
               "Restore",
               "UnitTests"
             ]
@@ -161,7 +155,6 @@
               "Pack",
               "Publish",
               "Release",
-              "ReportCoverage",
               "Restore",
               "UnitTests"
             ]
