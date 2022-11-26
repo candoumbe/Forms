@@ -24,6 +24,7 @@ namespace Forms.ContinuousIntegration
     [GitHubActions(
         "integration",
         GitHubActionsImage.UbuntuLatest,
+        FetchDepth = 0,
         OnPushBranchesIgnore = new[] { IHaveMainBranch.MainBranchName },
         PublishArtifacts = true,
         InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IReportCoverage.ReportCoverage), nameof(IPack.Pack) },
@@ -45,6 +46,7 @@ namespace Forms.ContinuousIntegration
     [GitHubActions(
         "delivery",
         GitHubActionsImage.UbuntuLatest,
+        FetchDepth = 0,
         OnPushBranches = new[] { IHaveMainBranch.MainBranchName },
         InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPublish.Publish), nameof(ICreateGithubRelease.AddGithubRelease) },
         EnableGitHubToken = true,
