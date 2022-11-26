@@ -27,7 +27,7 @@ namespace Forms.ContinuousIntegration
         FetchDepth = 0,
         OnPushBranchesIgnore = new[] { IHaveMainBranch.MainBranchName },
         PublishArtifacts = true,
-        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IReportCoverage.ReportCoverage), nameof(IPack.Pack) },
+        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), /*nameof(IReportCoverage.ReportCoverage),*/ nameof(IPack.Pack) },
         CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" },
         ImportSecrets = new[]
         {
@@ -82,7 +82,7 @@ namespace Forms.ContinuousIntegration
         ICreateGithubRelease,
         IPublish,
         IHaveMainBranch,
-        IReportCoverage,
+        //IReportCoverage,
         IHaveDevelopBranch,
         IHaveGitVersion,
         IHaveGitHubRepository,
@@ -138,12 +138,13 @@ namespace Forms.ContinuousIntegration
             ),
         };
 
-        /// <inheritdoc/>
-        bool IReportCoverage.ReportToCodeCov => this.Get<IReportCoverage>()?.CodecovToken is not null;
+        ///// <inheritdoc/>
+        //bool IReportCoverage.ReportToCodeCov => this.Get<IReportCoverage>()?.CodecovToken is not null;
 
         /// <summary>
         /// Defines the default target called when running the pipeline with no args
         /// </summary>
         public static int Main() => Execute<Build>(x => ((ICompile)x).Compile);
+
     }
 }
