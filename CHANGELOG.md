@@ -6,10 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### New features
+### ⚠️ Breaking changes
 - Changed `Link.Relation` from `string` to `string[]` [BREAKING]
-
-### Breaking changes
+- Dropped `netstandard1.0` TFM support
+- Dropped `net5.0` TFM support
 - Removed `Ultimately` dependency
 - Changed `IonResource`to a record (`netstandard2.1`+ and `net5`+)
 - Changed `Form`to a record (`netstandard2.1`+ and `net5`+)
@@ -17,10 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `Link`to a record (`netstandard2.1`+ and `net5`+)
 
 ## [0.2.1] / 2021-01-18
-### New Features
+### 🚀 New Features
 - Added [`FormFieldOption`](/src/Forms/FormFieldOption.cs)
 
-### Fixes
+### 🔧 Fixes
 - Fixed failing build pipeline
 
 ## [0.1.0]

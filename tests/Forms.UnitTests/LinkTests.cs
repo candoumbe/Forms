@@ -58,11 +58,7 @@ namespace Forms.UnitTests
             string relation = Faker.Lorem.Word();
 
             // Act
-#if NET5_0_OR_GREATER
             Link link = new() { Relations = new HashSet<string> { relation, relation } };
-#else
-            Link link = new() { Relations = new[] { relation, relation } }; 
-#endif
 
             // Assert
             link.Relations.Should()

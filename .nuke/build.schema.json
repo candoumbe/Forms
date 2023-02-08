@@ -10,9 +10,18 @@
           "type": "boolean",
           "description": "Indicates if any changes should be stashed automatically prior to switching branch (Default : true)"
         },
+        "CodecovToken": {
+          "type": "string",
+          "description": "The API key used to push code coverage to CodeCov",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
         "Configuration": {
           "type": "string",
-          "enum": []
+          "description": "Defines the configuratoin to use when building the application",
+          "enum": [
+            "Debug",
+            "Release"
+          ]
         },
         "Continue": {
           "type": "boolean",
@@ -85,7 +94,7 @@
         },
         "NugetApiKey": {
           "type": "string",
-          "description": "Token used to interact with Nuget API",
+          "description": "API key used to publish artifacts to Nuget.org",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
         "Partition": {
@@ -114,6 +123,7 @@
             "type": "string",
             "enum": [
               "AddGithubRelease",
+              "Benchmarks",
               "Changelog",
               "Clean",
               "Coldfix",
@@ -125,6 +135,7 @@
               "Pack",
               "Publish",
               "Release",
+              "ReportCoverage",
               "Restore",
               "UnitTests"
             ]
@@ -144,6 +155,7 @@
             "type": "string",
             "enum": [
               "AddGithubRelease",
+              "Benchmarks",
               "Changelog",
               "Clean",
               "Coldfix",
@@ -155,6 +167,7 @@
               "Pack",
               "Publish",
               "Release",
+              "ReportCoverage",
               "Restore",
               "UnitTests"
             ]

@@ -37,14 +37,14 @@
   </Choose>
 
   <ItemGroup>
-        <PackageReference Include="Optional" Version="4.0.0"/>
-    <PackageReference Include="Candoumbe.MiscUtilities" Version="0.10.0"/>
+    <PackageReference Include="Optional" Version="4.0.0"/>
+    <PackageReference Include="Candoumbe.MiscUtilities" Version="0.11.0"/>
     <PackageReference Include="Roslynator.Analyzers" Version="4.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'false' and '$(MSBuildProjectName)' != '_build'">
-      <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
