@@ -16,7 +16,7 @@ namespace Forms
 #if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
     public record Form : IonResource
 #else
-    public class Form : IonResource 
+    public class Form : IonResource
 #endif
     {
         /// <summary>

@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Forms
 {
@@ -11,7 +9,6 @@ namespace Forms
     ///     Inspired by ION spec (see http://ionwg.org/draft-ion.html#form-fields for more details)
     /// </para>
     /// </summary>
-    [JsonObject]
 #if NET5_0_OR_GREATER
     public record FormField
 #else
@@ -23,7 +20,6 @@ namespace Forms
         /// <summary>
         /// indicates whether or not the field value may be modified or submitted to a linked resource location. 
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? Enabled
         {
             get;
@@ -37,14 +33,12 @@ namespace Forms
         /// <summary>
         /// Type of the field
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public FormFieldType Type { get; set; }
+         public FormFieldType Type { get; set; }
 
         /// <summary>
         /// Description of the field
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Label
+         public string Label
         {
             get;
 #if NET5_0_OR_GREATER
@@ -57,7 +51,6 @@ namespace Forms
         /// <summary>
         /// Name of the field that should be submitted
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Name
         {
             get;
@@ -71,7 +64,6 @@ namespace Forms
         /// <summary>
         /// Regular expression that the field should be validated against.
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Pattern
         {
             get;
@@ -85,7 +77,6 @@ namespace Forms
         /// <summary>
         /// Short hint that described the expected value of the field.
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Placeholder
         {
             get;
@@ -99,7 +90,6 @@ namespace Forms
         /// <summary>
         /// Indicates if the field must be submitted
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? Required
         {
             get;
@@ -113,7 +103,6 @@ namespace Forms
         /// <summary>
         /// Indicates the maximum length of the value
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? MaxLength
         {
             get;
@@ -127,7 +116,6 @@ namespace Forms
         /// <summary>
         /// Indicates the minimum length of the value
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? MinLength
         {
             get;
@@ -141,7 +129,6 @@ namespace Forms
         /// <summary>
         /// Indicates that value must be greater than or equal to the specified <see cref="Min"/> value
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public float? Min
         {
             get;
@@ -155,7 +142,6 @@ namespace Forms
         /// <summary>
         /// Indicates that value must be less than or equal to the specified <see cref="Max"/> value
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public float? Max
         {
             get;
@@ -170,7 +156,6 @@ namespace Forms
         /// Indicates whether or not the field value is considered sensitive information 
         /// and should be kept secret.
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? Secret
         {
             get;
@@ -184,7 +169,6 @@ namespace Forms
         /// <summary>
         /// a string description of the field that may be used to enhance usability.
         /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Description
         {
             get;
@@ -216,12 +200,28 @@ namespace Forms
         /// a non-negative integer that specifies the minimum number of field values that may be submitted when the field type value 
         /// equals <see cref="FormFieldType.Array"/> or <see cref="FormFieldType.Set"/>
         /// </summary>
-        public int? MinSize { get; set; }
+        public int? MinSize
+        {
+            get;
+#if NET5_0_OR_GREATER
+            init;
+#else
+            set;
+#endif
+        }
 
         /// <summary>
         /// a non-negative integer that specifies the maximum number of field values that may be submitted when the field type value 
         /// equals <see cref="FormFieldType.Array"/> or <see cref="FormFieldType.Set"/>
         /// </summary>
-        public int? MaxSize { get; set; }
+        public int? MaxSize
+        {
+            get;
+#if NET5_0_OR_GREATER
+            init;
+#else
+            set;
+#endif
+        }
     }
 }

@@ -6,7 +6,7 @@
 #if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
     public record IonResource
 #else
-    public class IonResource 
+    public class IonResource
 #endif
     {
         /// <summary>

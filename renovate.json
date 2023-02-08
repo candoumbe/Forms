@@ -3,6 +3,6 @@
     "config:base"
   ],
   "assignees": [ "candoumbe" ],
-  "addLabels": [ "package-update" ],
+  "addLabels": [ "renovate", "package-update" ],
   "automerge": true
 }

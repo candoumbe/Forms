@@ -15,6 +15,7 @@ namespace Forms.ContinuousIntegration
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using static Nuke.Common.IO.PathConstruction;
 
@@ -27,8 +28,8 @@ namespace Forms.ContinuousIntegration
         FetchDepth = 0,
         OnPushBranchesIgnore = new[] { IHaveMainBranch.MainBranchName },
         PublishArtifacts = true,
-        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), /*nameof(IReportCoverage.ReportCoverage),*/ nameof(IPack.Pack) },
-        CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" },
+        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPack.Pack) },
+        CacheKeyFiles = new[] { "global.json", "src/**/*.csproj", "test/**/*.csproj" },
         ImportSecrets = new[]
         {
             nameof(NugetApiKey),
@@ -50,7 +51,7 @@ namespace Forms.ContinuousIntegration
         OnPushBranches = new[] { IHaveMainBranch.MainBranchName },
         InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPublish.Publish), nameof(ICreateGithubRelease.AddGithubRelease) },
         EnableGitHubToken = true,
-        CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" },
+        CacheKeyFiles = new[] { "global.json", "src/**/*.csproj", "test/**/*.csproj" },
         PublishArtifacts = true,
         ImportSecrets = new[]
         {
@@ -66,85 +67,81 @@ namespace Forms.ContinuousIntegration
             "LICENSE"
         }
     )]
-    [UnsetVisualStudioEnvironmentVariables]
-    [DotNetVerbosityMapping]
-    [HandleVisualStudioDebugging]
+
     public class Build : NukeBuild,
+        IHaveSolution,
         IHaveSourceDirectory,
         IHaveTestDirectory,
+        IGitFlowWithPullRequest,
         IClean,
         IRestore,
         ICompile,
-        IHaveSolution,
         IUnitTest,
         IMutationTest,
+        IBenchmark,
+        IReportCoverage,
         IPack,
-        ICreateGithubRelease,
         IPublish,
-        IHaveMainBranch,
-        //IReportCoverage,
-        IHaveDevelopBranch,
-        IHaveGitVersion,
-        IHaveGitHubRepository,
-        IHaveTests,
-        IHaveArtifacts,
-        IHaveChangeLog,
-        IGitFlowWithPullRequest
+        ICreateGithubRelease
     {
-        /// <summary>
-        /// Github Actions
-        /// </summary>
-        [CI]
-        public GitHubActions GitHubActions;
-
-        /// <summary>
-        /// Token used to interact with GitHub API
-        /// </summary>
-        [Parameter("Token used to interact with Nuget API")]
+        [Parameter("API key used to publish artifacts to Nuget.org")]
         [Secret]
         public readonly string NugetApiKey;
 
-        /// <summary>
-        /// Token used to interact with GitHub API
-        /// </summary>
         [Solution]
         [Required]
-        public Solution Solution { get; }
+        public readonly Solution Solution;
 
-        /// <inheritdoc/>
+        ///<inheritdoc/>
         Solution IHaveSolution.Solution => Solution;
 
-        /// <inheritdoc/>
-        IEnumerable<Project> IUnitTest.UnitTestsProjects => this.Get<IHaveSolution>().Solution.GetProjects("*.UnitTests");
-
-        /// <inheritdoc/>
-        IEnumerable<AbsolutePath> IPack.PackableProjects => this.Get<IHaveSourceDirectory>().SourceDirectory.GlobFiles("**/*.csproj");
-
-        /// <inheritdoc/>
-        IEnumerable<Project> IMutationTest.MutationTestsProjects => this.Get<IUnitTest>().UnitTestsProjects;
-
-        /// <inheritdoc/>
-        IEnumerable<PublishConfiguration> IPublish.PublishConfigurations => new PublishConfiguration[]
-        {
-            new NugetPublishConfiguration(
-                apiKey: NugetApiKey,
-                source: new Uri("https://api.nuget.org/v3/index.json"),
-                canBeUsed: () => NugetApiKey is not null
-            ),
-            new GitHubPublishConfiguration(
-                githubToken: this.Get<ICreateGithubRelease>()?.GitHubToken,
-                source: new Uri($"https://nuget.pkg.github.com/{GitHubActions?.RepositoryOwner}/index.json"),
-                canBeUsed: () => this is ICreateGithubRelease createRelease && createRelease.GitHubToken is not null
-            ),
-        };
-
-        ///// <inheritdoc/>
-        //bool IReportCoverage.ReportToCodeCov => this.Get<IReportCoverage>()?.CodecovToken is not null;
-
-        /// <summary>
-        /// Defines the default target called when running the pipeline with no args
-        /// </summary>
+        ///<inheritdoc/>
         public static int Main() => Execute<Build>(x => ((ICompile)x).Compile);
 
+        ///<inheritdoc/>
+        IEnumerable<AbsolutePath> IClean.DirectoriesToDelete => this.Get<IHaveSourceDirectory>().SourceDirectory.GlobDirectories("**/bin", "**/obj")
+            .Concat(this.Get<IHaveTestDirectory>().TestDirectory.GlobDirectories("**/bin", "**/obj"));
+
+        ///<inheritdoc/>
+        AbsolutePath IHaveSourceDirectory.SourceDirectory => RootDirectory / "src";
+
+        ///<inheritdoc/>
+        AbsolutePath IHaveTestDirectory.TestDirectory => RootDirectory / "tests";
+
+
+        ///<inheritdoc/>
+        IEnumerable<Project> IUnitTest.UnitTestsProjects => this.Get<IHaveSolution>().Solution.GetProjects("*UnitTests");
+
+        ///<inheritdoc/>
+        IEnumerable<Project> IMutationTest.MutationTestsProjects => this.Get<IUnitTest>().UnitTestsProjects;
+
+        ///<inheritdoc/>
+        IEnumerable<Project> IBenchmark.BenchmarkProjects => this.Get<IHaveSolution>().Solution.GetProjects("*.PerfomanceTests");
+
+        ///<inheritdoc/>
+        bool IReportCoverage.ReportToCodeCov => this.Get<IReportCoverage>().CodecovToken is not null;
+
+        ///<inheritdoc/>
+        IEnumerable<AbsolutePath> IPack.PackableProjects => this.Get<IHaveSourceDirectory>().SourceDirectory.GlobFiles("**/*.csproj");
+
+        ///<inheritdoc/>
+        IEnumerable<PublishConfiguration> IPublish.PublishConfigurations => new PublishConfiguration[]
+        {
+            new NugetPublishConfiguration(apiKey: NugetApiKey,
+                                          source: new Uri("https://api.nuget.org/v3/index.json"),
+                                          () => NugetApiKey is not null),
+            new GitHubPublishConfiguration(githubToken: this.Get<IHaveGitHubRepository>().GitHubToken,
+                                           source: new Uri("https://nukpg.github.com/"),
+                                           () => this is ICreateGithubRelease && this.Get<ICreateGithubRelease>()?.GitHubToken is not null)
+        };
+
+        ///<inheritdoc/>
+        protected override void OnBuildCreated()
+        {
+            if (IsServerBuild)
+            {
+                EnvironmentInfo.SetVariable("DOTNET_ROLL_FORWARD", "LatestMajor");
+            }
+        }
     }
 }
