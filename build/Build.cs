@@ -26,7 +26,7 @@ namespace Candoumbe.Forms.ContinuousIntegration
         FetchDepth = 0,
         OnPushBranchesIgnore = new[] { IHaveMainBranch.MainBranchName },
         PublishArtifacts = true,
-        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPack.Pack) },
+        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPack.Pack), nameof(IPublish.Publish) },
         CacheKeyFiles = new[] { "global.json", "src/**/*.csproj", "test/**/*.csproj" },
         ImportSecrets = new[]
         {
