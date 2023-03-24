@@ -1,4 +1,4 @@
-﻿namespace Forms
+﻿namespace Candoumbe.Forms
 {
     /// <summary>
     /// Link relation type representation (see http://www.iana.org/assignments/link-relations/link-relations.xhtml)

@@ -1,6 +1,6 @@
 using System;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Wraps a <see cref="Label"/> and a <see cref="Value"/>.

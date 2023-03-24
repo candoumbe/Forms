@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE1006:Styles d'affectation de noms", Justification = "<En attente>", Scope = "member", Target = "~F:Forms.FormBuilder`1.DateTypes")]
+[assembly: SuppressMessage("Style", "IDE1006:Styles d'affectation de noms", Justification = "<En attente>", Scope = "member", Target = "~F:Candoumbe.Forms.FormBuilder`1.DateTypes")]

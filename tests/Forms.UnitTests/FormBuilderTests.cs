@@ -9,9 +9,9 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Categories;
 
-using static Forms.FormFieldType;
+using static Candoumbe.Forms.FormFieldType;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests
 {
     [UnitTest]
     public class FormBuilderTests

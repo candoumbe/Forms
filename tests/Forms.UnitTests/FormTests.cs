@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Linq;
 using Xunit.Categories;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests
 {
     [UnitTest]
     public class FormTests

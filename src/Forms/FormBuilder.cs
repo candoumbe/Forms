@@ -6,9 +6,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using static Forms.FormFieldType;
+using static Candoumbe.Forms.FormFieldType;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Helper class to build a <see cref="Form"/> instance
