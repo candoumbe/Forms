@@ -8,7 +8,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests
 {
     public class FormFieldTests
     {

@@ -5,7 +5,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Categories;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests
 {
     [UnitTest]
     [Feature("REST")]

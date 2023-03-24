@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Form representation
@@ -80,7 +80,7 @@ namespace Forms
 #if NETSTANDARD1_0
         => this.Jsonify(new() { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore });
 #else
-        => this.Jsonify(new(System.Text.Json.JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault });
+        => this.Jsonify(new(System.Text.Json.JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
 #endif
     }
 }

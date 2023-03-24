@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Categories;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests
 {
-    [Feature(nameof(Forms))]
+    [Feature(nameof(Candoumbe.Forms))]
     [Feature(nameof(Link))]
     public class LinkTests
     {

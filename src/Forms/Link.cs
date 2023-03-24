@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Link representation

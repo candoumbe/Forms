@@ -2,7 +2,7 @@ using Xunit.Categories;
 using FsCheck.Xunit;
 using FsCheck;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests
 {
     [UnitTest]
     public class FormFieldOptionTests

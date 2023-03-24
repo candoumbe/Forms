@@ -1,4 +1,4 @@
-namespace Forms.ContinuousIntegration
+namespace Candoumbe.Forms.ContinuousIntegration
 {
     using Candoumbe.Pipelines;
     using Candoumbe.Pipelines.Components;
@@ -7,12 +7,9 @@ namespace Forms.ContinuousIntegration
     using Candoumbe.Pipelines.Components.Workflows;
 
     using Nuke.Common;
-    using Nuke.Common.CI;
     using Nuke.Common.CI.GitHubActions;
-    using Nuke.Common.Execution;
     using Nuke.Common.IO;
     using Nuke.Common.ProjectModel;
-    using Nuke.Common.Tools.DotNet;
 
     using System;
     using System.Collections.Generic;

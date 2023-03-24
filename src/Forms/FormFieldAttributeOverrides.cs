@@ -1,4 +1,4 @@
-﻿namespace Forms
+﻿namespace Candoumbe.Forms
 {
     /// <summary>
     /// Attributes of a <see cref="FormField"/>
