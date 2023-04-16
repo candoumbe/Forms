@@ -1,6 +1,5 @@
 namespace Candoumbe.Forms.ContinuousIntegration
 {
-    using Candoumbe.Pipelines;
     using Candoumbe.Pipelines.Components;
     using Candoumbe.Pipelines.Components.GitHub;
     using Candoumbe.Pipelines.Components.NuGet;
@@ -26,7 +25,7 @@ namespace Candoumbe.Forms.ContinuousIntegration
         FetchDepth = 0,
         OnPushBranchesIgnore = new[] { IHaveMainBranch.MainBranchName },
         PublishArtifacts = true,
-        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPack.Pack), nameof(IPublish.Publish) },
+        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPack.Pack), nameof(IPushNugetPackages.Publish) },
         CacheKeyFiles = new[] { "global.json", "src/**/*.csproj", "test/**/*.csproj" },
         ImportSecrets = new[]
         {
