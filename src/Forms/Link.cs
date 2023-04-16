@@ -32,7 +32,6 @@ namespace Candoumbe.Forms
         /// <summary>
         /// Relations of the resource that <see cref="Link"/> points to with the current resource
         /// </summary>
-#if NETSTANDARD
         public IEnumerable<string> Relations
         {
             get => _relations.Distinct();
@@ -40,9 +39,6 @@ namespace Candoumbe.Forms
         }
 
         private IEnumerable<string> _relations;
-#else
-        public IReadOnlySet<string> Relations { get; init; }
-#endif
 
         /// <summary>
         /// Http method to used in conjunction with <see cref="Href"/>.

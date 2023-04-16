@@ -1,6 +1,5 @@
 namespace Candoumbe.Forms.ContinuousIntegration
 {
-    using Candoumbe.Pipelines;
     using Candoumbe.Pipelines.Components;
     using Candoumbe.Pipelines.Components.GitHub;
     using Candoumbe.Pipelines.Components.NuGet;
