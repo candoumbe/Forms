@@ -6,6 +6,7 @@ namespace Candoumbe.Forms.ContinuousIntegration
     using Candoumbe.Pipelines.Components.Workflows;
 
     using Nuke.Common;
+    using Nuke.Common.CI;
     using Nuke.Common.CI.GitHubActions;
     using Nuke.Common.IO;
     using Nuke.Common.ProjectModel;
@@ -91,6 +92,9 @@ namespace Candoumbe.Forms.ContinuousIntegration
         [Solution]
         [Required]
         public readonly Solution Solution;
+
+        [CI]
+        public GitHubActions GitHubActions;
 
         ///<inheritdoc/>
         Solution IHaveSolution.Solution => Solution;
