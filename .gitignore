@@ -34,6 +34,9 @@ bld/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# Stryker result output directories
+StrykerOutput/
+
 # NUNIT
 *.VisualState.xml
 TestResult.xml
