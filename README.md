@@ -83,7 +83,7 @@ For an `account` resource with positive balance
 }
 ```
 
-whereas the following representation will be sent when `account.balance < 0`
+whereas the following representation would be sent when `balance < 0`
 
 ```json
 {
@@ -105,4 +105,3 @@ whereas the following representation will be sent when `account.balance < 0`
 [Candoumbe.Forms]: https://github.com/candoumbe/forms
 [Open API]: https://swagger.io/specification/
 [Form]: ./src/Forms/Form.cs
-[LinkRelation]: ./src/Forms/LinkRelation.cs
