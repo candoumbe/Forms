@@ -69,7 +69,7 @@ namespace Forms.ContinuousIntegration
         }
     )]
 
-    public class Build : NukeBuild,
+    public class Build : EnhancedNukeBuild,
         IHaveSolution,
         IHaveSourceDirectory,
         IHaveTestDirectory,
