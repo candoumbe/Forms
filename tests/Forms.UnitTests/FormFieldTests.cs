@@ -12,10 +12,6 @@ namespace Forms.UnitTests
 {
     public class FormFieldTests
     {
-        private readonly ITestOutputHelper _outputHelper;
-
-        public FormFieldTests(ITestOutputHelper outputHelper) => _outputHelper = outputHelper;
-
         [Fact]
         public void Ctor_build_valid_instance()
         {
