@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `FormField`to a record (`netstandard2.1`+ and `net5`+)
 - Changed `Link`to a record (`netstandard2.1`+ and `net5`+)
 
+### 🧹 HouseKeeping
+- Bumped build's `TargetFramework` to `net8.0`
+
 ## [0.2.1] / 2021-01-18
 ### 🚀 New Features
 - Added [`FormFieldOption`](/src/Forms/FormFieldOption.cs)
