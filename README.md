@@ -55,7 +55,7 @@ the API would return an `account` with `balance` that is either :
 How would you advertise that behavior to API consumers using only swagger ?
 As far as I can tell, there's no way to do this as what can be done is very business/context/state specific
 
-With [Candoumbe.Forms], you have a set of classes to help you display that behavior when sending resources back to clients. Modeled after the ION spec
+With [Candoumbe.Forms], you have a set of classes to help you display that behavior when sending resources back to clients. Modeled after the [ION spec]()
 
 - [Form] : models a form that can must be submitted
 

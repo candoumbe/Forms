@@ -27,61 +27,57 @@ namespace Forms.ContinuousIntegration
         "integration",
         GitHubActionsImage.UbuntuLatest,
         FetchDepth = 0,
-        OnPushBranchesIgnore = new[] { IHaveMainBranch.MainBranchName },
+        OnPushBranchesIgnore = [IHaveMainBranch.MainBranchName],
         PublishArtifacts = true,
-        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPack.Pack) },
-        CacheKeyFiles = new[] { "global.json", "src/**/*.csproj", "test/**/*.csproj" },
-        ImportSecrets = new[]
-        {
+        InvokedTargets = [nameof(IUnitTest.UnitTests), nameof(IPack.Pack)],
+        CacheKeyFiles = ["global.json", "src/**/*.csproj", "test/**/*.csproj"],
+        ImportSecrets =
+        [
             nameof(NugetApiKey),
             nameof(IReportCoverage.CodecovToken),
             nameof(IMutationTest.StrykerDashboardApiKey)
-        },
-        OnPullRequestExcludePaths = new[]
-        {
+        ],
+        OnPullRequestExcludePaths =
+        [
             "docs/*",
             "README.md",
             "CHANGELOG.md",
             "LICENSE"
-        }
+        ]
     )]
     [GitHubActions(
         "delivery",
         GitHubActionsImage.UbuntuLatest,
         FetchDepth = 0,
-        OnPushBranches = new[] { IHaveMainBranch.MainBranchName },
-        InvokedTargets = new[] { nameof(IUnitTest.UnitTests), nameof(IPushNugetPackages.Publish), nameof(ICreateGithubRelease.AddGithubRelease) },
+        OnPushBranches = [IHaveMainBranch.MainBranchName],
+        InvokedTargets = [nameof(IUnitTest.UnitTests), nameof(IPushNugetPackages.Publish), nameof(ICreateGithubRelease.AddGithubRelease)],
         EnableGitHubToken = true,
-        CacheKeyFiles = new[] { "global.json", "src/**/*.csproj", "test/**/*.csproj" },
+        CacheKeyFiles = ["global.json", "src/**/*.csproj", "test/**/*.csproj"],
         PublishArtifacts = true,
-        ImportSecrets = new[]
-        {
+        ImportSecrets =
+        [
             nameof(NugetApiKey),
             nameof(IReportCoverage.CodecovToken),
             nameof(IMutationTest.StrykerDashboardApiKey)
-        },
-        OnPullRequestExcludePaths = new[]
-        {
+        ],
+        OnPullRequestExcludePaths =
+        [
             "docs/*",
             "README.md",
             "CHANGELOG.md",
             "LICENSE"
-        }
+        ]
     )]
 
     public class Build : EnhancedNukeBuild,
-        IHaveSolution,
         IHaveSourceDirectory,
         IHaveTestDirectory,
         IGitFlowWithPullRequest,
         IClean,
         IRestore,
-        ICompile,
-        IUnitTest,
         IMutationTest,
         IBenchmark,
         IReportCoverage,
-        IPack,
         IPushNugetPackages,
         ICreateGithubRelease
     {
@@ -123,30 +119,22 @@ namespace Forms.ContinuousIntegration
         IEnumerable<AbsolutePath> IPack.PackableProjects => this.Get<IHaveSourceDirectory>().SourceDirectory.GlobFiles("**/*.csproj");
 
         ///<inheritdoc/>
-        IEnumerable<PushNugetPackageConfiguration> IPushNugetPackages.PublishConfigurations => new PushNugetPackageConfiguration[]
-        {
+        IEnumerable<PushNugetPackageConfiguration> IPushNugetPackages.PublishConfigurations =>
+        [
             new NugetPushConfiguration(apiKey: NugetApiKey,
                                        source: new Uri("https://api.nuget.org/v3/index.json"),
                                        () => NugetApiKey is not null),
             new GitHubPushNugetConfiguration(githubToken: this.Get<IHaveGitHubRepository>().GitHubToken,
                                              source: new Uri("https://nukpg.github.com/"),
-                                             () => this is ICreateGithubRelease && this.Get<ICreateGithubRelease>()?.GitHubToken is not null)
-        };
+                                             () => this.Get<ICreateGithubRelease>()?.GitHubToken is not null)
+        ];
 
         ///<inheritdoc/>
-        IEnumerable<MutationProjectConfiguration> IMutationTest.MutationTestsProjects => new[]{
-            new MutationProjectConfiguration(sourceProject: Solution.AllProjects.Single(csproj => string.Equals(csproj.Name, "Forms")),
-                                             testProjects: Solution.GetAllProjects("Forms.UnitTests"),
-                                             configurationFile: this.Get<IHaveTestDirectory>().TestDirectory / "Forms.UnitTests" / "stryker-config.json")
-        };
-
-        ///<inheritdoc/>
-        protected override void OnBuildCreated()
-        {
-            if (IsServerBuild)
-            {
-                EnvironmentInfo.SetVariable("DOTNET_ROLL_FORWARD", "LatestMajor");
-            }
-        }
+        IEnumerable<MutationProjectConfiguration> IMutationTest.MutationTestsProjects =>
+        [
+            new (sourceProject: Solution.AllProjects.Single(csproj => string.Equals(csproj.Name, "Forms")),
+                 testProjects: Solution.GetAllProjects("Forms.UnitTests"),
+                 configurationFile: this.Get<IHaveTestDirectory>().TestDirectory / "Forms.UnitTests" / "stryker-config.json")
+        ];
     }
 }

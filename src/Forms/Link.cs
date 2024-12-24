@@ -36,7 +36,7 @@ namespace Forms
         public IEnumerable<string> Relations
         {
             get => _relations.Distinct();
-            set => _relations = value?.Distinct() ?? Enumerable.Empty<string>();
+            set => _relations = value?.Distinct() ?? [];
         }
 
         private IEnumerable<string> _relations;
