@@ -5,59 +5,41 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Categories;
 
-namespace Candoumbe.Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests;
+
+[UnitTest]
+[Feature("REST")]
+public class FormFieldAttributeTests(ITestOutputHelper outputHelper)
 {
-    [UnitTest]
-    [Feature("REST")]
-    public class FormFieldAttributeTests
+    [Fact]
+    public void Ctor_Should_Build_Valid_Instance()
     {
-        private readonly ITestOutputHelper _outputHelper;
+        // Act
+        FormFieldAttribute attribute = new();
 
-        public FormFieldAttributeTests(ITestOutputHelper outputHelper)
-        {
-            _outputHelper = outputHelper;
-        }
+        // Assert
+        attribute.Type.Should().Be(FormFieldType.String);
+        attribute.Enabled.Should().BeFalse();
+        attribute.Required.Should().BeFalse();
+        attribute.Pattern.Should().BeNull();
+        attribute.Relations.Should()
+            .BeAssignableTo<IEnumerable<string>>().And
+            .BeEmpty();
+        attribute.Min.Should().Be(0);
+        attribute.MinLength.Should().Be(0);
 
-        [Fact]
-        public void Ctor_Should_Build_Valid_Instance()
-        {
-            // Act
-            FormFieldAttribute attribute = new();
+        attribute.Max.Should().Be(0);
+        attribute.MaxLength.Should().Be(0);
 
-            // Assert
-            attribute.Type.Should()
-                          .Be(FormFieldType.String);
-            attribute.Enabled.Should()
-                             .BeFalse();
-            attribute.Required.Should()
-                              .BeFalse();
-            attribute.Pattern.Should()
-                             .BeNull();
-            attribute.Relations.Should()
-                               .BeAssignableTo<IEnumerable<string>>().And
-                               .BeEmpty();
-            attribute.Min.Should()
-                         .Be(0);
-            attribute.MinLength.Should()
-                               .Be(0);
-
-            attribute.Max.Should()
-                         .Be(0);
-            attribute.MaxLength.Should()
-                               .Be(0);
-
-            attribute.MinSize.Should()
-                             .Be(0);
-            attribute.MaxSize.Should()
-                             .Be(0);
-        }
-
-        [Fact]
-        public void IsValid() => typeof(FormFieldAttribute).Should()
-                .BeDecoratedWith<AttributeUsageAttribute>(attr =>
-                    attr.AllowMultiple
-                    && attr.Inherited
-                    && attr.ValidOn == AttributeTargets.Property
-                );
+        attribute.MinSize.Should().Be(0);
+        attribute.MaxSize.Should().Be(0);
     }
+
+    [Fact]
+    public void IsValid() => typeof(FormFieldAttribute).Should()
+        .BeDecoratedWith<AttributeUsageAttribute>(attr =>
+            attr.AllowMultiple
+            && attr.Inherited
+            && attr.ValidOn == AttributeTargets.Property
+        );
 }

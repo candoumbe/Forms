@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 New Features
 - Added `net8.0` TFM support
+- Added support of `DateOnly` properties
 
 ### ⚠️ Breaking changes
 - Changed `Link.Relation` from `string` to `string[]` [BREAKING]
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🧹 Housekeeping
 - Updated `Candoumbe.Pipelines` to `0.12.1`
 - Updated `Candoumbe.MiscUtilities` to `0.14.0`
+- Improve unit tests readability
 
 ## [0.2.1] / 2021-01-18
 ### 🚀 New Features

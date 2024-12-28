@@ -27,13 +27,11 @@ namespace Candoumbe.Forms
         /// <summary>
         /// Builds a new <see cref="Form"/> instance.
         /// </summary>
-        public Form() => Fields = Enumerable.Empty<FormField>();
+        public Form() => Fields = [];
 
-#if !NETSTANDARD1_0
         /// <summary>
         /// <para>Compile a JSON Schema representation of the current <see cref="Form"/>.</para>
         /// <para>The generated schema can be later used to validate any incoming json against this form</para>
-        /// 
         /// </summary>
         /// <returns>JSON Schema that can be used to represent the current <see cref="Form"/>.</returns>
         public JSchema CompileSchema()
@@ -73,14 +71,9 @@ namespace Candoumbe.Forms
 
             return schema;
         }
-#endif
 
         ///<inheritdoc/>
         public override string ToString()
-#if NETSTANDARD1_0
-        => this.Jsonify(new() { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore });
-#else
-        => this.Jsonify(new(System.Text.Json.JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
-#endif
+            => this.Jsonify(new(System.Text.Json.JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
     }
 }
