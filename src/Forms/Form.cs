@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Schema;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Newtonsoft.Json.Schema;
-
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Form representation
@@ -13,20 +13,25 @@ namespace Forms
     ///     This class, inspired by ION spec (see http://ionwg.org/draft-ion.html#forms for more details), 
     ///     can be used to describe a 
     /// </remarks>
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+    public record Form : IonResource
+#else
     public class Form : IonResource
+#endif
     {
+        /// <summary>
+        /// Fields of the form
+        /// </summary>
         public IEnumerable<FormField> Fields { get; set; }
 
         /// <summary>
         /// Builds a new <see cref="Form"/> instance.
         /// </summary>
-        public Form() => Fields = Enumerable.Empty<FormField>();
+        public Form() => Fields = [];
 
-#if !NETSTANDARD1_0
         /// <summary>
         /// <para>Compile a JSON Schema representation of the current <see cref="Form"/>.</para>
         /// <para>The generated schema can be later used to validate any incoming json against this form</para>
-        /// 
         /// </summary>
         /// <returns>JSON Schema that can be used to represent the current <see cref="Form"/>.</returns>
         public JSchema CompileSchema()
@@ -66,8 +71,9 @@ namespace Forms
 
             return schema;
         }
-#endif
 
-        public override string ToString() => this.Jsonify();
+        ///<inheritdoc/>
+        public override string ToString()
+            => this.Jsonify(new(System.Text.Json.JsonSerializerDefaults.Web) { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
     }
 }

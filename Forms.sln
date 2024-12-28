@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1775E94A-B49B-4E52-8305-089EA19370AF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1775E94A-B49B-4E52-8305-089EA19370AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1F685C12-98AC-4AFE-84CC-01FE8DC81735}"
 EndProject
@@ -12,17 +12,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		azure-pipelines.yaml = azure-pipelines.yaml
+		CHANGELOG.md = CHANGELOG.md
+		core.props = core.props
 		Directory.build.props = Directory.build.props
+		GitVersion.yml = GitVersion.yml
 		Nuget.config = Nuget.config
+		README.md = README.md
 		renovate.json = renovate.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forms.UnitTests", "tests\Forms.UnitTests\Forms.UnitTests.csproj", "{56570F55-C623-4C28-9BE0-012092BB088D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candoumbe.Forms.UnitTests", "tests\Forms.UnitTests\Candoumbe.Forms.UnitTests.csproj", "{56570F55-C623-4C28-9BE0-012092BB088D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forms", "src\Forms\Forms.csproj", "{C708C912-0C8A-4509-AC18-114B195A87F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candoumbe.Forms", "src\Forms\Candoumbe.Forms.csproj", "{C708C912-0C8A-4509-AC18-114B195A87F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{FC973B91-A56C-4F9A-806E-BBECB7205925}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{D37753B6-1B07-4307-9C73-50930A23D3FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{80FF7202-FD4D-4597-A32B-4CDAB662C482}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\delivery.yml = .github\workflows\delivery.yml
+		.github\workflows\integration.yml = .github\workflows\integration.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{B6CD4685-E878-4D1F-B5FA-52455DFC12C8}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +63,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{56570F55-C623-4C28-9BE0-012092BB088D} = {1775E94A-B49B-4E52-8305-089EA19370AF}
 		{C708C912-0C8A-4509-AC18-114B195A87F9} = {1F685C12-98AC-4AFE-84CC-01FE8DC81735}
+		{80FF7202-FD4D-4597-A32B-4CDAB662C482} = {D37753B6-1B07-4307-9C73-50930A23D3FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0A6241A4-8CF2-4C99-A277-5A592238BD8B}

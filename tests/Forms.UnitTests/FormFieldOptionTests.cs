@@ -1,20 +1,26 @@
-using Xunit.Categories;
-using FsCheck.Xunit;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using FsCheck;
+using FsCheck.Xunit;
+using Xunit.Categories;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests;
+
+[UnitTest]
+public class FormFieldOptionTests
 {
-    [UnitTest]
-    public class FormFieldOptionTests
+    [Property]
+    public void Ctor_should_set_properties(NonEmptyString labelGenerator, object value)
     {
-        public void Ctor_should_set_properties(string label, object value)
-        {
-            // Arrange
-            FormFieldOption option = new(label, value);
+        // Arrange
+        string label = labelGenerator.Item;
+            
+        // Act
+        FormFieldOption option = new(label, value);
 
-            // Assert
-            Equals(option.Label, label).Label("Label")
-                .And(Equals(option.Value, value)).Label("Value");
-        }
+        // Assert
+        using AssertionScope assertionScope = new();
+        option.Label.Should().Be(label);
+        option.Value.Should().Be(value);
     }
 }

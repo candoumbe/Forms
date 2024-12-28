@@ -1,54 +1,48 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using FsCheck;
 using FsCheck.Xunit;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
-using Xunit.Abstractions;
+using Xunit.Categories;
 
-namespace Forms.UnitTests
+namespace Candoumbe.Forms.UnitTests;
+
+[UnitTest]
+public class FormFieldTests
 {
-    public class FormFieldTests
+    [Fact]
+    public void Ctor_build_valid_instance()
     {
-        private readonly ITestOutputHelper _outputHelper;
+        // Act
+        FormField instance = new();
 
-        public FormFieldTests(ITestOutputHelper outputHelper) => _outputHelper = outputHelper;
+        // Assert
+        instance.Description.Should().BeNull();
+        instance.Enabled.Should().BeNull();
+        instance.Label.Should().BeNull();
+        instance.Max.Should().BeNull();
+        instance.MaxLength.Should().BeNull();
+        instance.MinLength.Should().BeNull();
+        instance.Min.Should().BeNull();
+        instance.Name.Should().BeNull();
+        instance.Pattern.Should().BeNull();
+        instance.Placeholder.Should().BeNull();
+        instance.Required.Should().BeNull();
+        instance.Secret.Should().BeNull();
+        instance.Type.Should().Be(FormFieldType.String);
+    }
 
-        [Fact]
-        public void Ctor_build_valid_instance()
+    [Property]
+    public Property Setting_Options_should_change_type_to_Array(NonEmptyArray<string> values)
+    {
+        // Act
+        FormField field = new()
         {
             // Act
-            FormField instance = new();
+            Options = values.Item.Select(value => new FormFieldOption(value, value))
+        };
 
-            // Assert
-            instance.Description.Should().BeNull();
-            instance.Enabled.Should().BeNull();
-            instance.Label.Should().BeNull();
-            instance.Max.Should().BeNull();
-            instance.MaxLength.Should().BeNull();
-            instance.MinLength.Should().BeNull();
-            instance.Min.Should().BeNull();
-            instance.Name.Should().BeNull();
-            instance.Pattern.Should().BeNull();
-            instance.Placeholder.Should().BeNull();
-            instance.Required.Should().BeNull();
-            instance.Secret.Should().BeNull();
-            instance.Type.Should().Be(FormFieldType.String);
-        }
-
-        [Property]
-        public Property Setting_Options_should_change_type_to_Array(NonEmptyArray<string> values)
-        {
-            // Arrange
-            FormField field = new();
-
-            // Act
-            field.Options = values.Item.Select(value => new FormFieldOption(value, value));
-
-            // Assert
-            return (field.Type == FormFieldType.Array).ToProperty();
-        }
+        // Assert
+        return (field.Type == FormFieldType.Array).ToProperty();
     }
 }

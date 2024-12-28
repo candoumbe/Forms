@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnet-stryker": {
+      "version": "4.4.1",
+      "commands": [
+        "dotnet-stryker"
+      ]
+    },
+    "nuke.globaltool": {
+      "version": "9.0.3",
+      "commands": [
+        "nuke"
+      ]
+    }
+  }
+}

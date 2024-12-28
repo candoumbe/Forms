@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
+    ///<summary>
+    /// Marks a property that represent a <see cref="FormField"/>.
+    ///</summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
     public sealed class FormFieldAttribute : Attribute
     {
