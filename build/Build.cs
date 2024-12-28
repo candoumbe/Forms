@@ -1,6 +1,5 @@
-namespace Forms.ContinuousIntegration
+namespace Candoumbe.Forms.ContinuousIntegration
 {
-    using Candoumbe.Pipelines;
     using Candoumbe.Pipelines.Components;
     using Candoumbe.Pipelines.Components.GitHub;
     using Candoumbe.Pipelines.Components.NuGet;
@@ -9,10 +8,8 @@ namespace Forms.ContinuousIntegration
     using Nuke.Common;
     using Nuke.Common.CI;
     using Nuke.Common.CI.GitHubActions;
-    using Nuke.Common.Execution;
     using Nuke.Common.IO;
     using Nuke.Common.ProjectModel;
-    using Nuke.Common.Tools.DotNet;
 
     using System;
     using System.Collections.Generic;
@@ -91,6 +88,9 @@ namespace Forms.ContinuousIntegration
         [Solution]
         [Required]
         public readonly Solution Solution;
+
+        [CI]
+        public GitHubActions GitHubActions;
 
         ///<inheritdoc/>
         Solution IHaveSolution.Solution => Solution;

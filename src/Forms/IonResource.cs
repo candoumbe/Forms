@@ -1,4 +1,4 @@
-﻿namespace Forms
+﻿namespace Candoumbe.Forms
 {
     /// <summary>
     /// A ION resource

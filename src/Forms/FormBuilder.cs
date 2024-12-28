@@ -6,9 +6,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using static Forms.FormFieldType;
+using static Candoumbe.Forms.FormFieldType;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Helper class to build a <see cref="Form"/> instance
@@ -16,32 +16,36 @@ namespace Forms
     /// <typeparam name="T">Type to build a <see cref="Form"/> for.</typeparam>
     public class FormBuilder<T>
     {
-        private static readonly HashSet<Type> DateTypes = new HashSet<Type>
-        {
+        private static readonly HashSet<Type> DateTimeTypes =
+        [
             typeof(DateTime), typeof(DateTime?),
-            typeof(DateTimeOffset), typeof(DateTimeOffset?),
-        };
+            typeof(DateTimeOffset), typeof(DateTimeOffset?)
+        ];
 
-        private static readonly HashSet<Type> NumericTypes = new HashSet<Type>
-        {
+#if NET6_0_OR_GREATER
+        private static readonly HashSet<Type> DateTypes = [ typeof(DateOnly), typeof(DateOnly?) ];
+#endif
+
+        private static readonly HashSet<Type> NumericTypes =
+        [
             typeof(int), typeof(int?),
             typeof(float), typeof(float?),
             typeof(long), typeof(long?),
             typeof(double), typeof(double?),
             typeof(short), typeof(short?),
             typeof(decimal), typeof(decimal?)
-        };
+        ];
 
-        private readonly IList<FormField> _fields;
+        private readonly List<FormField> _fields;
         private readonly Link _meta;
 
         /// <summary>
         /// Creates a new <see cref="FormBuilder{T}"/> instance
         /// </summary>
-        /// <param name="meta">describes where and how to send the form's data</param>
+        /// <param name="meta">describes where and how to send the form's data.</param>
         public FormBuilder(Link meta = null)
         {
-            _fields = new List<FormField>();
+            _fields = [];
             _meta = meta;
         }
 
@@ -49,17 +53,16 @@ namespace Forms
         /// Adds a field to the <see cref="Form"/>'s configuration.
         /// </summary>
         /// <remarks>
-        /// 
         /// </remarks>
-        /// <typeparam name="TProperty"></typeparam>
-        /// <param name="property"></param>
+        /// <typeparam name="TProperty">The type of the property for which a <see cref="FormField"/> will be added.</typeparam>
+        /// <param name="property">The property of <typeparamref name="T"/> for which a field will be added to the configuration.</param>
         /// <param name="attributes">Overrides field's attributes</param>
         /// <returns>The current instance.</returns>
         public FormBuilder<T> AddField<TProperty>(Expression<Func<T, TProperty>> property, FormFieldAttributeOverrides attributes = null)
         {
             if (property.Body is MemberExpression me)
             {
-                FormField field = new FormField { Name = me.Member.Name };
+                FormField field = new() { Name = me.Member.Name };
                 Option<FormFieldAttribute> optionalFormFieldAttribute = me.Member.GetCustomAttribute<FormFieldAttribute>()
                     .SomeNotNull();
                 field = UpdateAttributesField(property, field, optionalFormFieldAttribute, attributes.SomeNotNull());
@@ -82,14 +85,20 @@ namespace Forms
         }
 
         private static FormField UpdateAttributesField<TProperty>(Expression<Func<T, TProperty>> property,
-                                                             FormField field,
-                                                             Option<FormFieldAttribute> optionalFormFieldAttribute,
-                                                             Option<FormFieldAttributeOverrides> optionalAttributesOverride)
+                                                                 FormField field,
+                                                                 Option<FormFieldAttribute> optionalFormFieldAttribute,
+                                                                 Option<FormFieldAttributeOverrides> optionalAttributesOverride)
         {
-            if (DateTypes.Contains(property.ReturnType))
+            if (DateTimeTypes.Contains(property.ReturnType))
             {
                 field.Type = FormFieldType.DateTime;
             }
+#if NET6_0_OR_GREATER
+            else if (DateTypes.Contains(property.ReturnType))
+            {
+                field.Type = Date;
+            }
+#endif
             else if (NumericTypes.Contains(property.ReturnType))
             {
                 field.Type = Integer;
@@ -272,19 +281,20 @@ namespace Forms
         }
 
         /// <summary>
-        /// Ands a field to the <see cref="Form"/>'s configuration.
+        /// Ands a <see cref="FormField"/> with several <see cref="FormFieldOption"/>s to the <see cref="Form"/>'s configuration.
         /// </summary>
-        /// <typeparam name="TProperty"></typeparam>
-        /// <param name="property"></param>
-        /// <param name="options"></param>
-        /// <param name="attributeOverrides"></param>
-        /// <returns></returns>
+        /// <typeparam name="TProperty">The type of the property for which a <see cref="FormField"/> will be added.</typeparam>
+        /// <param name="property">The property of <typeparamref name="T"/> for which a field will be added to the configuration.</param>
+        /// <param name="options">List of options that can be used for the field that will be created</param>
+        /// <param name="attributeOverrides">additional attributes to further customize the field</param>
+        /// <returns>The current instance.</returns>
         public FormBuilder<T> AddOptions<TProperty>(Expression<Func<T, TProperty>> property,
                                                     IEnumerable<FormFieldOption> options,
                                                     FormFieldAttributeOverrides attributeOverrides = null)
         {
             MemberExpression me = property.Body as MemberExpression;
-            FormField field = new() { Name = me.Member.Name, Type = FormFieldType.Array };
+            string memberName = me.Member.Name;
+            FormField field = new() {  Name = memberName, Label = memberName, Type = FormFieldType.Array };
             Option<FormFieldAttribute> optionalFormFieldAttribute = me.Member.GetCustomAttribute<FormFieldAttribute>()
                                                                              .SomeNotNull();
 
@@ -314,11 +324,11 @@ namespace Forms
         /// <summary>
         /// Adds a field to the <see cref="Form"/>'s configuration.
         /// </summary>
-        /// <typeparam name="TProperty"></typeparam>
-        /// <param name="property">Defines the property for which options will be added</param>
-        /// <param name="options"></param>
-        /// <param name="attributeOverrides"></param>
-        /// <returns></returns>
+        /// <typeparam name="TProperty">The type of the property for which a <see cref="FormField"/> will be added.</typeparam>
+        /// <param name="property">The property of <typeparamref name="T"/> for which a field will be added to the configuration.</param>
+        /// <param name="options">List of options that can be used for the field that will be created. Each value will be used a <see cref="FormFieldOption.Label"/> and <see cref="FormFieldOption.Value"/> in resulting <see cref="FormFieldOption"/>.</param>
+        /// <param name="attributeOverrides">Overrides field's attributes</param>
+        /// <returns>The current instance.</returns>
         public FormBuilder<T> AddOptions<TProperty>(Expression<Func<T, TProperty>> property,
                                                     IEnumerable<string> options,
                                                     FormFieldAttributeOverrides attributeOverrides = null)

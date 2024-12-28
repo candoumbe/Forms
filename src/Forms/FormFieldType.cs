@@ -1,4 +1,4 @@
-﻿namespace Forms
+﻿namespace Candoumbe.Forms
 {
     /// <summary>
     /// Type of <see cref="FormField"/> (<see href="https://ionspec.org/#__code_type_code_3"/>)

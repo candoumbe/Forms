@@ -15,14 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CHANGELOG.md = CHANGELOG.md
 		core.props = core.props
 		Directory.build.props = Directory.build.props
+		GitVersion.yml = GitVersion.yml
 		Nuget.config = Nuget.config
 		README.md = README.md
 		renovate.json = renovate.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forms.UnitTests", "tests\Forms.UnitTests\Forms.UnitTests.csproj", "{56570F55-C623-4C28-9BE0-012092BB088D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candoumbe.Forms.UnitTests", "tests\Forms.UnitTests\Candoumbe.Forms.UnitTests.csproj", "{56570F55-C623-4C28-9BE0-012092BB088D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forms", "src\Forms\Forms.csproj", "{C708C912-0C8A-4509-AC18-114B195A87F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candoumbe.Forms", "src\Forms\Candoumbe.Forms.csproj", "{C708C912-0C8A-4509-AC18-114B195A87F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{FC973B91-A56C-4F9A-806E-BBECB7205925}"
 EndProject

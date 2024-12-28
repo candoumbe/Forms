@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Forms
+namespace Candoumbe.Forms
 {
     /// <summary>
     /// Form field representation.
