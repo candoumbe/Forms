@@ -118,16 +118,16 @@ namespace Candoumbe.Forms.ContinuousIntegration
         ///<inheritdoc/>
         IEnumerable<AbsolutePath> IPack.PackableProjects => this.Get<IHaveSourceDirectory>().SourceDirectory.GlobFiles("**/*.csproj");
 
-        ///<inheritdoc/>
-        IEnumerable<PushNugetPackageConfiguration> IPushNugetPackages.PublishConfigurations =>
-        [
-            new NugetPushConfiguration(apiKey: NugetApiKey,
-                                       source: new Uri("https://api.nuget.org/v3/index.json"),
-                                       () => NugetApiKey is not null),
-            new GitHubPushNugetConfiguration(githubToken: this.Get<IHaveGitHubRepository>().GitHubToken,
-                                             source: new Uri("https://nukpg.github.com/"),
-                                             () => this.Get<ICreateGithubRelease>()?.GitHubToken is not null)
-        ];
+    ///<inheritdoc/>
+    IEnumerable<PushNugetPackageConfiguration> IPushNugetPackages.PublishConfigurations =>
+    [
+        new NugetPushConfiguration(apiKey: NugetApiKey,
+            source: new Uri(uriString: "https://api.nuget.org/v3/index.json"),
+            canBeUsed: () => NugetApiKey is not null),
+        new GitHubPushNugetConfiguration(githubToken: this.Get<IHaveGitHubRepository>().GitHubToken,
+            source: new Uri(uriString: $"https://nuget.pkg.github.com/{ this.Get<IHaveGitHubRepository>().GitRepository.GetGitHubOwner() }/index.json"),
+            canBeUsed: () => this.Get<ICreateGithubRelease>()?.GitHubToken is not null)
+    ];
 
         ///<inheritdoc/>
         IEnumerable<MutationProjectConfiguration> IMutationTest.MutationTestsProjects =>
