@@ -55,7 +55,7 @@ public class FormTests
                                                                            && prop.Value.ReadOnly.HasValue
                                                                            && prop.Value.ReadOnly.Value)
                                          && schema.Properties.Once(prop => prop.Key == "Prop3"
-                                                                           && Equals(prop.Value.Maximum,  10)
+                                                                           && prop.Value.Maximum ==  10
                                                                            && prop.Value.Type == JSchemaType.Number)
             }
         };
