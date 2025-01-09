@@ -9,7 +9,7 @@
 
 This project aims at describing forms using HTML like syntax and objects.
 
-The idea behind this project is to give opportunity to APIs written in .NET to describe their endpoints (responses and inputs) in a "HTML like way" so clients could **dynamically** generate inputs to push data to a given endpoints.
+The idea behind this project is to give opportunity to APIs written in .NET to describe their endpoints (responses and inputs) in an "HTML like way" so clients could **dynamically** generate inputs to push data to a given endpoints.
 
 ## Why
 
@@ -71,7 +71,7 @@ Given the following `AccountModel`
 public record NewAccountModel(Guid Id, string Name, double InitialBalance);
 ```
 
-the backend can "describe" the form for to use using the `FormBuilder` class as follow
+the backend can "describe" the form for to use using the `FormBuilder` class as follows
 
 ```csharp
 FormBuilder<NewAccountModel> createAccountFormBuilder = new(new Link { Href = "url/where/data/will/be/sent", Method = "POST", Relations = ["create-form"] });
@@ -141,7 +141,7 @@ But [Candoumbe.Forms] is that you can add more metadatas when describing a [form
 
 #### Going H.A.T.E.O.S.
 
-One of the fundamental concept of HATEOS is to provide API responses that are self descriptive so that clients can discover the API without any
+One of the fundamental concept of HATEOS is to provide API responses that are self-descriptive so that clients can discover the API without any
 prior knowledge. 
 For an `account` resource with positive balance
 
@@ -186,7 +186,7 @@ whereas the following representation would be sent when `balance < 0`
 }
 ```
 
-Providing consistent and dynamic navigation and/or action links allow any client to "react" and adapt to the state of the any resource.
+Providing consistent and dynamic navigation and/or action links allow any client to "react" and adapt to the state of any resource.
 
 
 [Candoumbe.Forms]: https://github.com/candoumbe/forms
