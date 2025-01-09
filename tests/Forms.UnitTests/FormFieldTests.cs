@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using FsCheck;
+using FsCheck.Fluent;
 using FsCheck.Xunit;
 using Xunit;
 using Xunit.Categories;
