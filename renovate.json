@@ -5,7 +5,7 @@
     ":assignee(candoumbe)",
     ":reviewer(candoumbe)",
     ":automergePatch",
-    "automergeStableNonMajor"
+    ":automergeStableNonMajor"
   ],
   "addLabels": [ "renovate", "package-update" ],
   "automergeStrategy": "rebase"
