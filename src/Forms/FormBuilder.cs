@@ -24,6 +24,7 @@ namespace Candoumbe.Forms
 
 #if NET6_0_OR_GREATER
         private static readonly HashSet<Type> DateTypes = [ typeof(DateOnly), typeof(DateOnly?) ];
+        private static readonly HashSet<Type> TimeTypes = [ typeof(TimeOnly), typeof(TimeOnly?) ];
 #endif
 
         private static readonly HashSet<Type> NumericTypes =
@@ -97,6 +98,10 @@ namespace Candoumbe.Forms
             else if (DateTypes.Contains(property.ReturnType))
             {
                 field.Type = Date;
+            }
+            else if (TimeTypes.Contains(property.ReturnType))
+            {
+                field.Type = Time;
             }
 #endif
             else if (NumericTypes.Contains(property.ReturnType))

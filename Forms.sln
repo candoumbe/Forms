@@ -3,8 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{642C1774-605B-4530-A305-1FA91BACD047}"
-    ProjectSection(SolutionItems) = preProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{642C1774-605B-4530-A305-1FA91BACD047}"
+	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
@@ -15,12 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{642C1774-605
 		Nuget.config = Nuget.config
 		README.md = README.md
 		renovate.json = renovate.json
+		global.json = global.json
 	EndProjectSection
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candoumbe.Forms", "src\Forms\Candoumbe.Forms.csproj", "{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{55376906-0CED-4F0F-B769-060CED7F0FB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C9ABABCF-B961-41DF-B201-CF665D9AD6A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candoumbe.Forms.UnitTests", "test\Forms.UnitTests\Candoumbe.Forms.UnitTests.csproj", "{99FE07A5-0442-4022-BAD0-EF4F32999377}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candoumbe.Forms", "src\Forms\Candoumbe.Forms.csproj", "{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{FC973B91-A56C-4F9A-806E-BBECB7205925}"
 EndProject
@@ -30,12 +32,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\delivery.yml = .github\workflows\delivery.yml
 		.github\workflows\integration.yml = .github\workflows\integration.yml
+		.github\workflows\nightly.yml = .github\workflows\nightly.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{B6CD4685-E878-4D1F-B5FA-52455DFC12C8}"
 	ProjectSection(SolutionItems) = preProject
 		.config\dotnet-tools.json = .config\dotnet-tools.json
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candoumbe.Forms.UnitTests", "test\Forms.UnitTests\Candoumbe.Forms.UnitTests.csproj", "{3E487869-2A51-457E-8AB9-3234C93275B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,13 +55,17 @@ Global
 		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E487869-2A51-457E-8AB9-3234C93275B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E487869-2A51-457E-8AB9-3234C93275B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E487869-2A51-457E-8AB9-3234C93275B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E487869-2A51-457E-8AB9-3234C93275B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9} = {642C1774-605B-4530-A305-1FA91BACD047}
-		{99FE07A5-0442-4022-BAD0-EF4F32999377} = {C9ABABCF-B961-41DF-B201-CF665D9AD6A7}
+		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9} = {55376906-0CED-4F0F-B769-060CED7F0FB0}
+		{80FF7202-FD4D-4597-A32B-4CDAB662C482} = {D37753B6-1B07-4307-9C73-50930A23D3FE}
+		{3E487869-2A51-457E-8AB9-3234C93275B3} = {C9ABABCF-B961-41DF-B201-CF665D9AD6A7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+					SolutionGuid = {56B4888F-95AE-4DF1-A89A-96911D120E24}
 	EndGlobalSection
 EndGlobal
