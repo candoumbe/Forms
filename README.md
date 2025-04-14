@@ -139,9 +139,9 @@ You are definitely right ! That's exactly one of the purpose for which Open API 
 
 But [Candoumbe.Forms] is that you can add more metadatas when describing a [form](./src/Forms/Form.cs)
 
-#### Going H.A.T.E.O.S.
+#### Going H.A.T.E.O.A.S.
 
-One of the fundamental concept of HATEOS is to provide API responses that are self-descriptive so that clients can discover the API without any
+One of the fundamental concept of HATEOAS is to provide API responses that are self-descriptive so that clients can discover the API without any
 prior knowledge. 
 For an `account` resource with positive balance
 
