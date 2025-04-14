@@ -36,13 +36,17 @@
         Decimal,
 
         /// <summary>
-        /// Indicates that the field's value will be set using one or more values coming from a array
+        /// Indicates that the field's value will be set using one or more values coming from an array
         /// </summary>
         Array,
         /// <summary>
-        /// Indicates that the field's value will be set using one or more values coming from a array.
+        /// Indicates that the field's value will be set using one or more values coming from a, array.
         /// Each value should be unique in the selection
         /// </summary>
         Set,
+        /// <summary>
+        /// The field is a <see href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6"> time</see> value.
+        /// </summary>
+        Time
     }
 }

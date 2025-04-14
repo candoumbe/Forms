@@ -32,6 +32,8 @@ public class FormBuilderTests(ITestOutputHelper outputHelper)
 
         public DateTime? LastBattleDate { get; set; }
 
+        public TimeOnly? PreferredTimeOfSurveillance { get; set; }
+
         public int? CurrentWinningStreakCount { get; set; }
     }
 
@@ -170,7 +172,18 @@ public class FormBuilderTests(ITestOutputHelper outputHelper)
                         new FormField { Name = "Id", Type = FormFieldType.String, Label = nameof(SuperHero.Id) },
                     ]
                 }
+            },
+            {
+                new FormBuilder<SuperHero>()
+                    .AddField(x => x.PreferredTimeOfSurveillance),
+                new Form
+                {
+                    Fields = [
+                        new FormField { Name = nameof(SuperHero.PreferredTimeOfSurveillance), Type = Time, Label = nameof(SuperHero.PreferredTimeOfSurveillance) },
+                    ]
+                }
             }
+
         };
 
     [Theory]

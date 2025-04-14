@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
-using Xunit.Abstractions;
 using Xunit.Categories;
 
 namespace Candoumbe.Forms.UnitTests;
 
 [UnitTest]
 [Feature("REST")]
-public class FormFieldAttributeTests(ITestOutputHelper outputHelper)
+public class FormFieldAttributeTests()
 {
     [Fact]
     public void Ctor_Should_Build_Valid_Instance()

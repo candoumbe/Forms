@@ -1,3 +1,5 @@
+using Nuke.Common.Tools.GitHub;
+
 namespace Candoumbe.Forms.ContinuousIntegration
 {
     using Candoumbe.Pipelines.Components;
@@ -147,8 +149,10 @@ namespace Candoumbe.Forms.ContinuousIntegration
         public static int Main() => Execute<Build>(x => ((ICompile)x).Compile);
 
         ///<inheritdoc/>
-        IEnumerable<AbsolutePath> IClean.DirectoriesToDelete => this.Get<IHaveSourceDirectory>().SourceDirectory.GlobDirectories("**/bin", "**/obj")
-            .Concat(this.Get<IHaveTestDirectory>().TestDirectory.GlobDirectories("**/bin", "**/obj"));
+        IEnumerable<AbsolutePath> IClean.DirectoriesToDelete => [
+            ..this.Get<IHaveSourceDirectory>().SourceDirectory.GlobDirectories("**/bin", "**/obj"),
+            ..this.Get<IHaveTestDirectory>().TestDirectory.GlobDirectories("**/bin", "**/obj")
+        ];
 
         ///<inheritdoc/>
         IEnumerable<Project> IUnitTest.UnitTestsProjects => this.Get<IHaveSolution>().Solution.AllProjects.Where(project => project.Name.Like("*.UnitTests"));
@@ -166,11 +170,11 @@ namespace Candoumbe.Forms.ContinuousIntegration
         IEnumerable<PushNugetPackageConfiguration> IPushNugetPackages.PublishConfigurations =>
         [
             new NugetPushConfiguration(apiKey: NugetApiKey,
-                                       source: new Uri("https://api.nuget.org/v3/index.json"),
-                                       () => NugetApiKey is not null),
+                source: new Uri("https://api.nuget.org/v3/index.json"),
+                canBeUsed: () => NugetApiKey is not null),
             new GitHubPushNugetConfiguration(githubToken: this.Get<IHaveGitHubRepository>().GitHubToken,
-                                             source: new Uri("https://nukpg.github.com/"),
-                                             () => this.Get<ICreateGithubRelease>()?.GitHubToken is not null)
+                source: new Uri($"https://nuget.pkg.github.com/{this.Get<IHaveGitHubRepository>().GitRepository.GetGitHubOwner()}/index.json"),
+                canBeUsed: () => this.As<ICreateGithubRelease>()?.GitHubToken is not null)
         ];
 
         ///<inheritdoc/>
