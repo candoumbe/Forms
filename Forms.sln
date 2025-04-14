@@ -1,14 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.1.32414.318
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1775E94A-B49B-4E52-8305-089EA19370AF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1F685C12-98AC-4AFE-84CC-01FE8DC81735}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39412158-6D0B-4385-B75C-F1DFF312FCBA}"
-	ProjectSection(SolutionItems) = preProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{642C1774-605B-4530-A305-1FA91BACD047}"
+    ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
@@ -20,10 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		renovate.json = renovate.json
 	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candoumbe.Forms", "src\Forms\Candoumbe.Forms.csproj", "{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candoumbe.Forms.UnitTests", "tests\Forms.UnitTests\Candoumbe.Forms.UnitTests.csproj", "{56570F55-C623-4C28-9BE0-012092BB088D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C9ABABCF-B961-41DF-B201-CF665D9AD6A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Candoumbe.Forms", "src\Forms\Candoumbe.Forms.csproj", "{C708C912-0C8A-4509-AC18-114B195A87F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candoumbe.Forms.UnitTests", "test\Forms.UnitTests\Candoumbe.Forms.UnitTests.csproj", "{99FE07A5-0442-4022-BAD0-EF4F32999377}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{FC973B91-A56C-4F9A-806E-BBECB7205925}"
 EndProject
@@ -45,27 +42,21 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{56570F55-C623-4C28-9BE0-012092BB088D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56570F55-C623-4C28-9BE0-012092BB088D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56570F55-C623-4C28-9BE0-012092BB088D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56570F55-C623-4C28-9BE0-012092BB088D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C708C912-0C8A-4509-AC18-114B195A87F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C708C912-0C8A-4509-AC18-114B195A87F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C708C912-0C8A-4509-AC18-114B195A87F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C708C912-0C8A-4509-AC18-114B195A87F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC973B91-A56C-4F9A-806E-BBECB7205925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC973B91-A56C-4F9A-806E-BBECB7205925}.Release|Any CPU.ActiveCfg = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{56570F55-C623-4C28-9BE0-012092BB088D} = {1775E94A-B49B-4E52-8305-089EA19370AF}
-		{C708C912-0C8A-4509-AC18-114B195A87F9} = {1F685C12-98AC-4AFE-84CC-01FE8DC81735}
-		{80FF7202-FD4D-4597-A32B-4CDAB662C482} = {D37753B6-1B07-4307-9C73-50930A23D3FE}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99FE07A5-0442-4022-BAD0-EF4F32999377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0A6241A4-8CF2-4C99-A277-5A592238BD8B}
+	GlobalSection(NestedProjects) = preSolution
+		{B14EFBC6-7E8C-41F6-BB22-74F48E9804A9} = {642C1774-605B-4530-A305-1FA91BACD047}
+		{99FE07A5-0442-4022-BAD0-EF4F32999377} = {C9ABABCF-B961-41DF-B201-CF665D9AD6A7}
 	EndGlobalSection
 EndGlobal

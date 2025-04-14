@@ -32,6 +32,7 @@
       </PropertyGroup>
       <ItemGroup Condition="'$(IsTestProject)' == 'false'">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" Condition="'$(GITHUB_ACTIONS)' == 'true'"/>
+        <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25" PrivateAssets="All" Condition="'$(GITHUB_ACTIONS)' == 'true'"/>
       </ItemGroup>
     </When>
   </Choose>

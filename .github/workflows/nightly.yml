@@ -9,23 +9,25 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --generate-configuration GitHubActions_delivery --host GitHubActions
+#         nuke --generate-configuration GitHubActions_nightly --host GitHubActions
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
-name: delivery
+name: nightly
 
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     paths:
       - '!docs/*'
       - '!README.md'
       - '!CHANGELOG.md'
       - '!LICENSE'
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   ubuntu-22_04:
@@ -45,8 +47,8 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'src/**/*.csproj', 'test/**/stryker-config.json', 'test/**/xunit.runner.json', 'test/**/*.csproj') }}
-      - name: 'Run: UnitTests, Publish, AddGithubRelease'
-        run: ./build.cmd UnitTests Publish AddGithubRelease
+      - name: 'Run: UnitTests, MutationTests, Pack'
+        run: ./build.cmd UnitTests MutationTests Pack
         env:
           NugetApiKey: ${{ secrets.NUGET_API_KEY }}
           CodecovToken: ${{ secrets.CODECOV_TOKEN }}
@@ -67,6 +69,11 @@ jobs:
         with:
           name: unit-tests-coverage-history
           path: output/artifacts/reports/coverage-history/unit-tests-coverage-history
+      - name: 'Publish: mutation-tests'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-tests
+          path: output/artifacts/tests-results/mutation-tests
       - name: 'Publish: packages'
         uses: actions/upload-artifact@v4
         with:

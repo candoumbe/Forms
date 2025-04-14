@@ -22,12 +22,19 @@ namespace Candoumbe.Forms.ContinuousIntegration
     /// </summary>
     [GitHubActions(
         "integration",
-        GitHubActionsImage.UbuntuLatest,
+        GitHubActionsImage.Ubuntu2204,
+        AutoGenerate = false,
         FetchDepth = 0,
         OnPushBranchesIgnore = [IHaveMainBranch.MainBranchName],
         PublishArtifacts = true,
-        InvokedTargets = [nameof(IUnitTest.UnitTests), nameof(IPack.Pack)],
-        CacheKeyFiles = ["global.json", "src/**/*.csproj", "test/**/*.csproj"],
+        InvokedTargets = [nameof(IUnitTest.UnitTests), nameof(IMutationTest.MutationTests), nameof(IPack.Pack)],
+        CacheKeyFiles = [
+            "global.json",
+            "src/**/*.csproj",
+            "test/**/stryker-config.json",
+            "test/**/xunit.runner.json",
+            "test/**/*.csproj"
+        ],
         ImportSecrets =
         [
             nameof(NugetApiKey),
@@ -44,12 +51,50 @@ namespace Candoumbe.Forms.ContinuousIntegration
     )]
     [GitHubActions(
         "delivery",
-        GitHubActionsImage.UbuntuLatest,
+        GitHubActionsImage.Ubuntu2204,
+        AutoGenerate = false,
         FetchDepth = 0,
         OnPushBranches = [IHaveMainBranch.MainBranchName],
         InvokedTargets = [nameof(IUnitTest.UnitTests), nameof(IPushNugetPackages.Publish), nameof(ICreateGithubRelease.AddGithubRelease)],
         EnableGitHubToken = true,
-        CacheKeyFiles = ["global.json", "src/**/*.csproj", "test/**/*.csproj"],
+        CacheKeyFiles = [
+            "global.json",
+            "src/**/*.csproj",
+            "test/**/stryker-config.json",
+            "test/**/xunit.runner.json",
+            "test/**/*.csproj"
+        ],
+        PublishArtifacts = true,
+        ImportSecrets =
+        [
+            nameof(NugetApiKey),
+            nameof(IReportCoverage.CodecovToken),
+            nameof(IMutationTest.StrykerDashboardApiKey)
+        ],
+        OnPullRequestExcludePaths =
+        [
+            "docs/*",
+            "README.md",
+            "CHANGELOG.md",
+            "LICENSE"
+        ]
+    )]
+    [GitHubActions(
+        "nightly",
+        GitHubActionsImage.Ubuntu2204,
+        AutoGenerate = false,
+        FetchDepth = 0,
+        OnCronSchedule = "0 0 * * *",
+        OnPushBranches = [IHaveDevelopBranch.DevelopBranchName],
+        InvokedTargets = [nameof(IUnitTest.UnitTests), nameof(IMutationTest.MutationTests), nameof(IPushNugetPackages.Pack)],
+        EnableGitHubToken = true,
+        CacheKeyFiles = [
+            "global.json",
+            "src/**/*.csproj",
+            "test/**/stryker-config.json",
+            "test/**/xunit.runner.json",
+            "test/**/*.csproj"
+        ],
         PublishArtifacts = true,
         ImportSecrets =
         [
@@ -73,8 +118,8 @@ namespace Candoumbe.Forms.ContinuousIntegration
         IClean,
         IRestore,
         IMutationTest,
+        IReportUnitTestCoverage,
         IBenchmark,
-        IReportCoverage,
         IPushNugetPackages,
         ICreateGithubRelease
     {
@@ -85,17 +130,20 @@ namespace Candoumbe.Forms.ContinuousIntegration
         [Secret]
         public readonly string NugetApiKey;
 
+        /// <summary>
+        /// Solution
+        /// </summary>
         [Solution]
         [Required]
         public readonly Solution Solution;
 
-        [CI]
-        public GitHubActions GitHubActions;
-
         ///<inheritdoc/>
         Solution IHaveSolution.Solution => Solution;
 
-        ///<inheritdoc/>
+        /// <summary>
+        /// Entry point of the program
+        /// </summary>
+        /// <returns></returns>
         public static int Main() => Execute<Build>(x => ((ICompile)x).Compile);
 
         ///<inheritdoc/>
@@ -103,14 +151,10 @@ namespace Candoumbe.Forms.ContinuousIntegration
             .Concat(this.Get<IHaveTestDirectory>().TestDirectory.GlobDirectories("**/bin", "**/obj"));
 
         ///<inheritdoc/>
-        AbsolutePath IHaveTestDirectory.TestDirectory => RootDirectory / "tests";
-
-
-        ///<inheritdoc/>
-        IEnumerable<Project> IUnitTest.UnitTestsProjects => this.Get<IHaveSolution>().Solution.GetAllProjects("*UnitTests");
+        IEnumerable<Project> IUnitTest.UnitTestsProjects => this.Get<IHaveSolution>().Solution.AllProjects.Where(project => project.Name.Like("*.UnitTests"));
 
         ///<inheritdoc/>
-        IEnumerable<Project> IBenchmark.BenchmarkProjects => this.Get<IHaveSolution>().Solution.GetAllProjects("*.PerfomanceTests");
+        IEnumerable<Project> IBenchmark.BenchmarkProjects => this.Get<IHaveSolution>().Solution.AllProjects.Where(project => project.Name.Like("*.PerformanceTests"));
 
         ///<inheritdoc/>
         bool IReportCoverage.ReportToCodeCov => this.Get<IReportCoverage>().CodecovToken is not null;
@@ -132,8 +176,8 @@ namespace Candoumbe.Forms.ContinuousIntegration
         ///<inheritdoc/>
         IEnumerable<MutationProjectConfiguration> IMutationTest.MutationTestsProjects =>
         [
-            new (sourceProject: Solution.AllProjects.Single(csproj => string.Equals(csproj.Name, "Forms")),
-                 testProjects: Solution.GetAllProjects("Forms.UnitTests"),
+            new (sourceProject: Solution.AllProjects.Single(csproj => string.Equals(csproj.Name, "Candoumbe.Forms")),
+                 testProjects: this.Get<IUnitTest>().UnitTestsProjects,
                  configurationFile: this.Get<IHaveTestDirectory>().TestDirectory / "Forms.UnitTests" / "stryker-config.json")
         ];
     }
