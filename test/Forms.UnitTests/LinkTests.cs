@@ -46,6 +46,21 @@ public class LinkTests
             .Be(expected, reason);
     }
 
+    [Theory]
+    [InlineData(null, false, "null is not a URI template")]
+    [InlineData("", false, "empty string is not a URI template")]
+    [InlineData("a/link/", false, "a relative link with no placeholder")]
+    [InlineData("a/link/{id}", true, "the relative link contains a placeholder")]
+    [InlineData("a/link/?id={id}", true, "the relative link contains a placeholder in its query string")]
+    public void IsTemplate_returns_correct_result(string href, bool expected, string reason)
+    {
+        // Act
+        bool result = Link.IsTemplate(href);
+
+        // Assert
+        result.Should().Be(expected, reason);
+    }
+
     [Fact]
     public void Given_existing_link_already_relations_When_adding_a_relation_that_already_exists_Then_there_should_be_no_duplicates()
     {
