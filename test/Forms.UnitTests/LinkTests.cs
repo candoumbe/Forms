@@ -52,6 +52,7 @@ public class LinkTests
     [InlineData("a/link/", false, "a relative link with no placeholder")]
     [InlineData("a/link/{id}", true, "the relative link contains a placeholder")]
     [InlineData("a/link/?id={id}", true, "the relative link contains a placeholder in its query string")]
+    [InlineData("a/{resource}/{id}", true, "the relative link contains two placeholders")]
     public void IsTemplate_returns_correct_result(string href, bool expected, string reason)
     {
         // Act
