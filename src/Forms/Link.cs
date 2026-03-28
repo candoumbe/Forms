@@ -83,10 +83,10 @@ namespace Candoumbe.Forms
         public bool? Template => Href?.Like("*{?*}*");
 
         /// <summary>
-        /// Determines if the given <paramref name="href"/> is a URI template as defined in <see href="https://datatracker.ietf.org/doc/html/rfc6570">RFC 6570</see>.
+        /// Determines if the given <paramref name="href"/> contains a URI template expression (placeholder).
         /// </summary>
         /// <param name="href">The URI string to test.</param>
-        /// <returns><see langword="true"/> if <paramref name="href"/> is a URI template, <see langword="false"/> otherwise.</returns>
+        /// <returns><see langword="true"/> if <paramref name="href"/> contains a URI template expression, <see langword="false"/> otherwise.</returns>
         public static bool IsTemplate(string href) => href?.Like("*{?*}*") ?? false;
 
         /// <summary>
